@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { FiHeart, FiShoppingBag } from 'react-icons/fi';
+import { useAuth } from '../../contexts/AuthContext.jsx';
 
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -9,6 +10,8 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const { user, logout } = useAuth();
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -35,12 +38,29 @@ export default function Navbar() {
           <NavLink to="/cart" className="text-xl hover:text-slate-950">
             <FiShoppingBag />
           </NavLink>
-          <NavLink
-            to="/login"
-            className="rounded-full border border-slate-300 px-4 py-2 text-sm font-medium transition hover:border-slate-600"
-          >
-            Sign in
-          </NavLink>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <NavLink
+                to="/profile"
+                className="rounded-full border border-slate-300 px-4 py-2 text-sm font-medium transition hover:border-slate-600"
+              >
+                {user.name}
+              </NavLink>
+              <button
+                onClick={logout}
+                className="rounded-full border border-rose-300 px-4 py-2 text-sm font-medium text-rose-600 transition hover:border-rose-600"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <NavLink
+              to="/auth/login"
+              className="rounded-full border border-slate-300 px-4 py-2 text-sm font-medium transition hover:border-slate-600"
+            >
+              Sign in
+            </NavLink>
+          )}
         </div>
       </div>
     </header>

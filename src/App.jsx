@@ -5,6 +5,7 @@ import AuthLayout from './layouts/AuthLayout.jsx';
 import AdminLayout from './layouts/AdminLayout.jsx';
 import Home from './pages/Home.jsx';
 import { ProductProvider } from './contexts/ProductContext.jsx';
+import { AuthProvider } from './contexts/AuthContext.jsx';
 import Shop from './pages/Shop.jsx';
 import ProductDetails from './pages/ProductDetails.jsx';
 import Category from './pages/Category.jsx';
@@ -32,40 +33,42 @@ import ProductManagement from './pages/ProductManagement.jsx';
 function App() {
   return (
     <AnimatePresence mode="wait">
-      <ProductProvider>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="shop" element={<Shop />} />
-            <Route path="product/:id" element={<ProductDetails />} />
-            <Route path="category/:slug" element={<Category />} />
-            <Route path="wishlist" element={<Wishlist />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="order-success" element={<OrderSuccess />} />
-            <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="faq" element={<FAQ />} />
-            <Route path="privacy" element={<Privacy />} />
-            <Route path="terms" element={<Terms />} />
-            <Route path="blog" element={<Blog />} />
-            <Route path="blog/:slug" element={<BlogDetails />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="orders" element={<OrderHistory />} />
-            <Route path="order/:id" element={<OrderDetails />} />
-          </Route>
-          <Route path="/auth" element={<AuthLayout />}>
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="forgot-password" element={<ForgotPassword />} />
-            <Route path="reset-password" element={<ResetPassword />} />
-          </Route>
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="products" element={<ProductManagement />} />
-          </Route>
-        </Routes>
-      </ProductProvider>
+      <AuthProvider>
+        <ProductProvider>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<Home />} />
+              <Route path="shop" element={<Shop />} />
+              <Route path="product/:id" element={<ProductDetails />} />
+              <Route path="category/:slug" element={<Category />} />
+              <Route path="wishlist" element={<Wishlist />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="order-success" element={<OrderSuccess />} />
+              <Route path="about" element={<About />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="faq" element={<FAQ />} />
+              <Route path="privacy" element={<Privacy />} />
+              <Route path="terms" element={<Terms />} />
+              <Route path="blog" element={<Blog />} />
+              <Route path="blog/:slug" element={<BlogDetails />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="orders" element={<OrderHistory />} />
+              <Route path="order/:id" element={<OrderDetails />} />
+            </Route>
+            <Route path="/auth" element={<AuthLayout />}>
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="reset-password" element={<ResetPassword />} />
+            </Route>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="products" element={<ProductManagement />} />
+            </Route>
+          </Routes>
+        </ProductProvider>
+      </AuthProvider>
     </AnimatePresence>
   );
 }
