@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-white text-slate-900 antialiased;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  @apply box-border;
+}
+
+button,
+input,
+textarea,
+select {
+  @apply font-sans;
+}
