@@ -1,0 +1,13 @@
+# Ignore local Sanity studio and editor files during frontend deployment
+node_modules/
+.turbo/
+.turborepo/
+.turboignore
+**/node_modules
+**/package-lock.json
+**/pnpm-lock.yaml
+.tscache
+.DS_Store
+dist/
+.turbo
+tshirt/
