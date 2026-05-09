@@ -1,12 +1,12 @@
 services:
   - type: web
+    runtime: node
     name: velix-backend
-    env: node
     plan: free
-    root: backend
-    buildCommand: npm install
+    rootDir: backend
+    buildCommand: npm install && npm run build
     startCommand: npm start
-    autoDeploy: true
+    autoDeployTrigger: commit
     envVars:
       - key: JWT_SECRET
         sync: false
