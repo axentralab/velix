@@ -4,8 +4,6 @@ node_modules/
 .turborepo/
 .turboignore
 **/node_modules
-**/package-lock.json
-**/pnpm-lock.yaml
 .tscache
 .DS_Store
 dist/

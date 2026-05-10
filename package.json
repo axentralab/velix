@@ -1,0 +1,9 @@
+{
+  "name": "ecom",
+  "private": true,
+  "scripts": {
+    "install:all": "cd frontend && npm install && cd ../backend && npm install",
+    "build": "npm run install:all && cd frontend && npm run build",
+    "start": "node backend/server.js"
+  }
+}
