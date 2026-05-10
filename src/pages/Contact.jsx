@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiMapPin, FiInstagram, FiTwitter, FiSend, FiClock } from 'react-icons/fi';
 
 const contactMethods = [
-  { icon: <FiMail size={20} />, title: 'Email us', value: 'support@velix.com', sub: 'Reply within 24 hours' },
-  { icon: <FiPhone size={20} />, title: 'Call us', value: '+1 (800) 123-4567', sub: 'Mon–Fri, 9am–6pm EST' },
-  { icon: <FiMapPin size={20} />, title: 'Visit us', value: '24 Rue du Faubourg, Paris', sub: 'By appointment only' },
+  { icon: <FiMail size={20} />, title: 'Email us', value: 'support@fashionhub.com', sub: 'Reply within 24 hours' },
+  { icon: <FiPhone size={20} />, title: 'Call us', value: '+8809677666888', sub: 'Mon–Fri, 9am–6pm' },
+  { icon: <FiMapPin size={20} />, title: 'Visit us', value: 'Dhaka, Bangladesh', sub: 'Store locations available' },
   { icon: <FiClock size={20} />, title: 'Live chat', value: 'Available now', sub: 'Avg. response: 3 min' },
 ];
 

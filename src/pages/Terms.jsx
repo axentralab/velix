@@ -3,7 +3,7 @@ export default function Terms() {
     <div className="mx-auto max-w-6xl px-6 py-10">
       <h1 className="text-4xl font-bold text-slate-950">Terms & Conditions</h1>
       <p className="mt-6 text-sm leading-7 text-slate-600">
-        By using the site, you agree to our terms of service, payment terms, and product return policy.
+        By using FashionHub, you agree to our terms of service, payment terms, and product return policy.
       </p>
       <section className="mt-10 space-y-6 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
         <div>

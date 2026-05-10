@@ -8,16 +8,16 @@ import { FiArrowRight, FiStar, FiTruck, FiRefreshCw, FiShield, FiCreditCard } fr
 import { useState } from 'react';
 
 const categories = [
-  { name: 'Men', slug: 'men', image: 'https://res.cloudinary.com/dwrlbuej9/image/upload/v1778322199/ChatGPT_Image_May_9_2026_04_16_24_PM_ykwkkj.png', count: 24 },
-  { name: 'Women', slug: 'women', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80', count: 36 },
-  { name: 'Streetwear', slug: 'streetwear', image: 'https://images.unsplash.com/photo-1556906781-9a412961a28c?auto=format&fit=crop&w=900&q=80', count: 18 },
-  { name: 'Shoes', slug: 'shoes', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80', count: 12 },
+  { name: 'Men', slug: 'men', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80', count: 24 },
+  { name: 'Women', slug: 'women', image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=900&q=80', count: 36 },
+  { name: 'Kids', slug: 'kids', image: 'https://images.unsplash.com/photo-1503944168849-c1246463e59f?auto=format&fit=crop&w=900&q=80', count: 18 },
+  { name: 'New Arrival', slug: 'new-arrival', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80', count: 12 },
 ];
 
 const testimonials = [
-  { name: 'Sophia M.', role: 'Fashion Blogger', rating: 5, text: 'Absolutely stunning quality. Velix has completely elevated my wardrobe. The packaging alone is an experience.' },
-  { name: 'James R.', role: 'Creative Director', rating: 5, text: 'I\'ve shopped luxury brands worldwide, and Velix matches the craftsmanship at a fraction of the price.' },
-  { name: 'Aria K.', role: 'Stylist', rating: 5, text: 'My clients are obsessed. Every piece tells a story. This is fashion with intention.' },
+  { name: 'Sophia M.', role: 'Fashion Blogger', rating: 5, text: 'Great quality at affordable prices. FashionHub has become my go-to for trendy clothes.' },
+  { name: 'James R.', role: 'Creative Director', rating: 5, text: 'Love the variety for men, women, and kids. Fast shipping and easy returns.' },
+  { name: 'Aria K.', role: 'Stylist', rating: 5, text: 'My clients love the styles. Comfortable and stylish pieces for everyday wear.' },
 ];
 
 const perks = [
@@ -27,7 +27,7 @@ const perks = [
   { icon: <FiCreditCard size={22} />, title: 'Secure Payments', desc: 'Bank-level SSL encryption' },
 ];
 
-const brands = ['Versace', 'Gucci', 'Prada', 'Balenciaga', 'Fendi', 'Dior'];
+const brands = ['Nike', 'Adidas', 'Puma', 'Levi\'s', 'H&M', 'Zara'];
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
 
@@ -45,6 +45,18 @@ export default function Home() {
     <div className="space-y-24 pb-20">
       {/* Hero */}
       <HeroSection />
+
+      {/* App Banner */}
+      <section className="bg-slate-100 py-8">
+        <div className="mx-auto max-w-6xl px-6 text-center">
+          <p className="text-lg font-semibold text-slate-950">GET 5% OFF ON APP</p>
+          <p className="mt-2 text-sm text-slate-600">Download our app for exclusive deals and faster shopping.</p>
+          <div className="mt-4 flex justify-center gap-4">
+            <a href="#" className="rounded-lg bg-black px-4 py-2 text-white text-sm">Download on App Store</a>
+            <a href="#" className="rounded-lg bg-black px-4 py-2 text-white text-sm">Get it on Google Play</a>
+          </div>
+        </div>
+      </section>
 
       {/* Perks Bar */}
       <section className="mx-auto max-w-6xl px-6">

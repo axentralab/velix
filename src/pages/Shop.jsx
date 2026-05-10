@@ -5,7 +5,7 @@ import { useProducts } from '../contexts/ProductContext.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiSliders, FiGrid, FiList, FiX } from 'react-icons/fi';
 
-const CATEGORIES = ['All', 'Men', 'Women', 'Streetwear', 'Shoes'];
+const CATEGORIES = ['All', 'Men', 'Women', 'Kids', 'New Arrival'];
 const SORT_OPTIONS = [
   { label: 'Newest', value: 'newest' },
   { label: 'Price: Low to High', value: 'price_asc' },
@@ -19,7 +19,7 @@ export default function Shop() {
   const [category, setCategory] = useState('All');
   const [sort, setSort] = useState('newest');
   const [view, setView] = useState('grid');
-  const [priceRange, setPriceRange] = useState([0, 500]);
+  const [priceRange, setPriceRange] = useState([0, 50]);
   const [showFilters, setShowFilters] = useState(false);
 
   if (loading) return <Loader />;
@@ -43,7 +43,7 @@ export default function Shop() {
       {/* Header */}
       <div className="mb-10">
         <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Shop</p>
-        <h1 className="mt-3 text-4xl font-bold text-slate-950">All luxury essentials</h1>
+        <h1 className="mt-3 text-4xl font-bold text-slate-950">All fashion essentials</h1>
         <p className="mt-2 text-sm text-slate-500">{filtered.length} product{filtered.length !== 1 ? 's' : ''} found</p>
       </div>
 

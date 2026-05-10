@@ -3,24 +3,24 @@ import { FiArrowRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 const team = [
-  { name: 'Isabelle Fontaine', role: 'Founder & Creative Director', img: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80' },
-  { name: 'Marco Visconti', role: 'Head of Design', img: 'https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=600&q=80' },
-  { name: 'Sophia Chen', role: 'Lead Stylist', img: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=80' },
+  { name: 'Rahul Ahmed', role: 'Founder & CEO', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80' },
+  { name: 'Priya Sharma', role: 'Head of Design', img: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=600&q=80' },
+  { name: 'Arjun Patel', role: 'Lead Stylist', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80' },
 ];
 
 const values = [
-  { title: 'Craftsmanship', desc: 'Every piece is designed with extraordinary attention to detail and handcrafted by skilled artisans.' },
-  { title: 'Sustainability', desc: 'We use only responsibly sourced fabrics from certified suppliers who share our environmental values.' },
-  { title: 'Inclusivity', desc: 'Luxury is for everyone. We celebrate diverse body types, styles, and identities in everything we do.' },
-  { title: 'Innovation', desc: 'We push boundaries in fashion design, blending heritage techniques with modern aesthetics.' },
+  { title: 'Affordability', desc: 'Quality fashion at prices everyone can afford, without compromising on style.' },
+  { title: 'Quality', desc: 'We ensure every piece meets high standards for comfort and durability.' },
+  { title: 'Inclusivity', desc: 'Fashion for all ages and styles, celebrating diversity in our collections.' },
+  { title: 'Trendiness', desc: 'Staying ahead with the latest trends in casual wear.' },
 ];
 
 const milestones = [
-  { year: '2019', event: 'Velix founded in Paris with a collection of 12 signature pieces.' },
-  { year: '2020', event: 'Expanded to online retail, reaching customers in 45 countries.' },
-  { year: '2022', event: 'Launched the Velix Sustainable Line, reducing carbon footprint by 40%.' },
-  { year: '2024', event: 'Opened flagship stores in New York, London, and Tokyo.' },
-  { year: '2026', event: 'Celebrating 1 million customers worldwide and our biggest collection yet.' },
+  { year: '2020', event: 'FashionHub founded with a focus on affordable casual wear.' },
+  { year: '2021', event: 'Launched online store, reaching customers across Bangladesh.' },
+  { year: '2023', event: 'Expanded collections to include men, women, and kids.' },
+  { year: '2024', event: 'Introduced app for better shopping experience.' },
+  { year: '2026', event: 'Celebrating growing community and new arrivals.' },
 ];
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
@@ -33,10 +33,9 @@ export default function About() {
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} transition={{ duration: 0.7 }}>
             <p className="text-sm uppercase tracking-[0.3em] text-slate-500">About us</p>
-            <h1 className="mt-3 text-5xl font-bold text-slate-950 leading-tight">Crafting elevated fashion stories.</h1>
+            <h1 className="mt-3 text-5xl font-bold text-slate-950 leading-tight">Bringing affordable fashion to everyone.</h1>
             <p className="mt-6 text-lg leading-8 text-slate-600">
-              Velix is a curated fashion experience with refined products, editorial storytelling, and a design-first mindset.
-              Born in Paris, worn worldwide — we believe fashion is the ultimate form of self-expression.
+              FashionHub is your go-to for trendy and comfortable clothing. From t-shirts to polos, we offer quality fashion for men, women, and kids at great prices.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link to="/shop" className="flex items-center gap-2 rounded-full bg-slate-950 px-8 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white hover:bg-slate-800 transition">

@@ -17,7 +17,7 @@ const faqData = [
     category: 'Products & Sizing',
     items: [
       { question: 'How do I find my size?', answer: 'Each product has a detailed size guide. We recommend measuring your chest, waist, and hips and comparing to our chart.' },
-      { question: 'Are your products authentic luxury?', answer: 'Absolutely. Every Velix piece is crafted from premium, responsibly sourced materials with quality guarantees.' },
+      { question: 'Are your products high quality?', answer: 'Yes. We focus on comfort and durability with quality fabrics and construction.' },
       { question: 'Do you restock sold-out items?', answer: 'Some items are limited edition and won\'t be restocked. Subscribe to our newsletter to be notified of restocks.' },
     ],
   },
