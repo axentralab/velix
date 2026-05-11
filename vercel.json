@@ -23,19 +23,19 @@
     },
     {
       "src": "/product/(.*)",
-      "dest": "/frontend/dist/index.html"
+      "dest": "/index.html"
     },
     {
       "src": "/category/(.*)",
-      "dest": "/frontend/dist/index.html"
+      "dest": "/index.html"
     },
     {
       "src": "/blog/(.*)",
-      "dest": "/frontend/dist/index.html"
+      "dest": "/index.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/dist/index.html"
+      "dest": "/index.html"
     }
   ]
 }
