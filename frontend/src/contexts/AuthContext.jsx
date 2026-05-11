@@ -10,8 +10,8 @@ import { setAuthToken } from '../services/api.js';
 const AuthContext = createContext(null);
 
 const storageKeys = {
-  token: 'velix_auth_token',
-  user: 'velix_auth_user',
+  token: 'veloura_auth_token',
+  user: 'veloura_auth_user',
 };
 
 function getInitialAuth() {

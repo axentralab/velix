@@ -31,7 +31,7 @@ export const post = {
       name: 'author',
       title: 'Author',
       type: 'string',
-      initialValue: 'Velix Team',
+      initialValue: 'Veloura Team',
       validation: (Rule) => Rule.required(),
     },
     {

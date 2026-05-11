@@ -39,7 +39,7 @@ export default function Blog() {
         <div className="mx-auto max-w-2xl px-6">
           <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Journal</p>
           <h1 className="mt-3 text-5xl font-bold">Fashion insights & stories</h1>
-          <p className="mt-4 text-slate-400">Trends, styling advice, and behind-the-scenes from the world of Velix.</p>
+          <p className="mt-4 text-slate-400">Trends, styling advice, and behind-the-scenes from the world of Veloura.</p>
         </div>
       </section>
 

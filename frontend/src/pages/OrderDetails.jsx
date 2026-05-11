@@ -37,7 +37,7 @@ export default function OrderDetails() {
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Tracking</p>
           <div className="space-y-4 text-sm text-slate-600">
             <p>Your order is on the way and will arrive in 2–3 business days.</p>
-            <p>Tracking number: VELIX-2026-100{id}</p>
+            <p>Tracking number: VELOURA-2026-100{id}</p>
           </div>
         </aside>
       </div>

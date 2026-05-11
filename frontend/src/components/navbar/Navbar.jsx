@@ -359,7 +359,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <NavLink to="/" className="text-xl font-black tracking-[0.1em] text-black">
-            VELIX
+            VELOURA
           </NavLink>
 
           {/* ── Desktop Nav ─────────────── */}

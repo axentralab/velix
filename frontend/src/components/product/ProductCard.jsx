@@ -21,7 +21,7 @@ export default function ProductCard({ product }) {
             alt={product.name}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             onError={(e) => {
-              e.target.src = `https://placehold.co/500x640/f5f5f5/aaaaaa?text=Velix`;
+              e.target.src = `https://placehold.co/500x640/f5f5f5/aaaaaa?text=Veloura`;
             }}
           />
 

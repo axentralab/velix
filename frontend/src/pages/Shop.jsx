@@ -66,7 +66,7 @@ function ShopProductCard({ product }) {
         <img
           src={imageSrc}
           alt={product.name}
-          onError={(e) => { e.target.src = `https://placehold.co/400x500/f8fafc/94a3b8?text=Velix`; }}
+          onError={(e) => { e.target.src = `https://placehold.co/400x500/f8fafc/94a3b8?text=Veloura`; }}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 

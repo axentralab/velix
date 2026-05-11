@@ -139,7 +139,7 @@ export default function Contact() {
                 </a>
               </div>
               <p className="mt-4 text-xs text-slate-400">
-                @velix — Follow us for daily drops, styling tips, and behind-the-scenes content.
+                @veloura — Follow us for daily drops, styling tips, and behind-the-scenes content.
               </p>
             </div>
           </motion.div>

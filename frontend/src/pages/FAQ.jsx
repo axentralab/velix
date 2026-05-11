@@ -49,7 +49,7 @@ export default function FAQ() {
           <p className="text-sm uppercase tracking-[0.3em] text-slate-400">FAQ</p>
           <h1 className="mt-3 text-5xl font-bold">Frequently asked questions</h1>
           <p className="mt-4 text-slate-400">
-            Everything you need to know about Velix. Can't find your answer? Contact us.
+            Everything you need to know about Veloura. Can't find your answer? Contact us.
           </p>
           <div className="mt-8 relative max-w-sm mx-auto">
             <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
@@ -153,7 +153,7 @@ export default function FAQ() {
               Contact support
             </Link>
             <a
-              href="mailto:hello@velix.store"
+              href="mailto:hello@veloura.store"
               className="rounded-full border border-slate-700 px-8 py-3 text-sm font-semibold text-white hover:border-slate-400 transition"
             >
               Email us

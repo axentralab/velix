@@ -126,7 +126,7 @@ export default function About() {
       <section className="mx-auto max-w-6xl px-6">
         <div className="mb-12 text-center">
           <p className="text-sm uppercase tracking-[0.3em] text-slate-500">The people</p>
-          <h2 className="mt-3 text-3xl font-bold text-slate-950">Meet the team behind Velix.</h2>
+          <h2 className="mt-3 text-3xl font-bold text-slate-950">Meet the team behind Veloura.</h2>
         </div>
         <div className="grid gap-8 md:grid-cols-3">
           {team.map((member, i) => (

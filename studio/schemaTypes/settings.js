@@ -12,7 +12,7 @@ export const settings = {
       name: 'siteName',
       title: 'Site Name',
       type: 'string',
-      initialValue: 'Velix',
+      initialValue: 'Veloura',
       validation: (Rule) => Rule.required(),
     },
     {
@@ -53,7 +53,7 @@ export const settings = {
           name: 'email',
           title: 'Email Address',
           type: 'string',
-          description: 'e.g. hello@velix.com',
+          description: 'e.g. hello@veloura.com',
         },
         {
           name: 'phone',
@@ -87,7 +87,7 @@ export const settings = {
           name: 'facebook',
           title: 'Facebook URL',
           type: 'url',
-          description: 'e.g. https://facebook.com/velix',
+          description: 'e.g. https://facebook.com/veloura',
         },
         {
           name: 'instagram',
@@ -122,7 +122,7 @@ export const settings = {
       name: 'footerText',
       title: 'Footer Copyright Text',
       type: 'string',
-      initialValue: '© 2025 Velix. All rights reserved.',
+      initialValue: '© 2025 Veloura. All rights reserved.',
     },
     {
       name: 'footerAbout',

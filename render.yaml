@@ -1,7 +1,7 @@
 services:
   - type: web
     runtime: node
-    name: velix-backend
+    name: veloura-backend
     plan: free
     rootDir: backend
     buildCommand: npm install && npm run build

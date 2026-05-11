@@ -382,7 +382,7 @@ export default function ProductDetails() {
             <ul className="space-y-2 list-disc list-inside text-slate-500">
               <li>Premium quality construction</li>
               <li>Responsibly sourced materials</li>
-              <li>Signature Velix finish</li>
+              <li>Signature Veloura finish</li>
               {product.sizes?.length > 0 && <li>Available in sizes: {product.sizes.join(', ')}</li>}
             </ul>
           </div>
@@ -440,7 +440,7 @@ export default function ProductDetails() {
                     <img
                       src={p.image || `https://placehold.co/400x500/f8fafc/94a3b8?text=${encodeURIComponent(p.name)}`}
                       alt={p.name}
-                      onError={(e) => { e.target.src = `https://placehold.co/400x500/f8fafc/94a3b8?text=Velix`; }}
+                      onError={(e) => { e.target.src = `https://placehold.co/400x500/f8fafc/94a3b8?text=Veloura`; }}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
