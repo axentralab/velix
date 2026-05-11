@@ -30,6 +30,19 @@ import BlogDetails from './pages/BlogDetails.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import ProductManagement from './pages/ProductManagement.jsx';
 
+function NotFound() {
+  return (
+    <div className="mx-auto max-w-4xl px-6 py-24 text-center">
+      <p className="text-sm uppercase tracking-[0.35em] text-gray-400">Page not found</p>
+      <h1 className="mt-5 text-4xl font-black text-slate-900">404 — Sorry, we can’t find that page.</h1>
+      <p className="mt-4 text-sm text-slate-600">The link may be invalid or the page has been moved.</p>
+      <a href="/" className="mt-8 inline-block rounded-full bg-slate-950 px-8 py-3 text-sm font-semibold text-white transition hover:bg-black">
+        Return to home
+      </a>
+    </div>
+  );
+}
+
 function App() {
   return (
     <AnimatePresence mode="wait">
@@ -55,6 +68,7 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="orders" element={<OrderHistory />} />
               <Route path="order/:id" element={<OrderDetails />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="/auth" element={<AuthLayout />}>
               <Route path="login" element={<Login />} />
