@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+const defaultBaseUrl = import.meta.env.DEV ? 'http://localhost:5000/api' : '/api';
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || defaultBaseUrl,
   headers: {
     'Content-Type': 'application/json',
   },
