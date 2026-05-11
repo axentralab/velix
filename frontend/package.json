@@ -11,6 +11,7 @@
     "backend": "npm --prefix backend run dev"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^1.7.3",
     "@sanity/client": "^4.0.0",
     "@sanity/image-url": "^1.0.0",
