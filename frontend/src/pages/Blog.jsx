@@ -50,7 +50,7 @@ export default function Blog() {
           <Link to={`/blog/${featured.slug}`}
             className="group grid gap-8 overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white shadow-sm lg:grid-cols-2">
             <div className="overflow-hidden">
-              <img src={featured.image} alt={featured.title}
+              <img src={featured.image || `https://placehold.co/800x500/f1f5f9/94a3b8?text=${encodeURIComponent(featured.title)}`} alt={featured.title}
                 className="h-72 w-full object-cover transition-transform duration-700 group-hover:scale-105 lg:h-full" />
             </div>
             <div className="flex flex-col justify-center p-8 lg:p-12">
@@ -60,7 +60,7 @@ export default function Blog() {
               <div className="mt-6 flex items-center gap-4 text-xs text-slate-400">
                 <span className="flex items-center gap-1"><FiUser size={12} /> {featured.author}</span>
                 <span className="flex items-center gap-1"><FiClock size={12} /> {featured.readTime}</span>
-                <span>{featured.date}</span>
+                <span>{featured.publishedAt ? new Date(featured.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}</span>
               </div>
               <span className="mt-6 flex items-center gap-2 text-sm font-semibold text-slate-950 group-hover:text-gold transition-colors">
                 Read article <FiArrowRight />
@@ -84,12 +84,14 @@ export default function Blog() {
         {/* Post Grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {rest.map((post, i) => (
-            <motion.div key={post.slug} initial="hidden" whileInView="visible" viewport={{ once: true }}
+            <motion.div key={post._id} initial="hidden" whileInView="visible" viewport={{ once: true }}
               variants={fadeUp} transition={{ delay: i * 0.1, duration: 0.5 }}>
               <Link to={`/blog/${post.slug}`}
                 className="group flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition h-full">
                 <div className="overflow-hidden">
-                  <img src={post.image} alt={post.title}
+                  <img
+                    src={post.image || `https://placehold.co/400x300/f1f5f9/94a3b8?text=${encodeURIComponent(post.title || 'Post')}`}
+                    alt={post.title}
                     className="h-52 w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
@@ -98,7 +100,7 @@ export default function Blog() {
                   <p className="mt-3 text-xs leading-6 text-slate-500 flex-1">{post.excerpt}</p>
                   <div className="mt-5 flex items-center gap-3 text-xs text-slate-400 border-t border-slate-100 pt-4">
                     <span className="flex items-center gap-1"><FiClock size={11} /> {post.readTime}</span>
-                    <span>{post.date}</span>
+                    <span>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}</span>
                   </div>
                 </div>
               </Link>
