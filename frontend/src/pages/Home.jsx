@@ -115,11 +115,11 @@ export default function Home() {
       {/* HERO — Full-width image with text overlay (Fabrilife style)        */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden bg-gray-950">
-        <div className="grid lg:grid-cols-2 min-h-[420px] sm:min-h-[520px] lg:min-h-[600px]">
+        <div className="grid lg:grid-cols-2 min-h-[420px] sm:min-h-[520px] lg:min-h-[min(80vh,720px)]">
           {/* Left — text */}
           <motion.div
             initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}
-            className="flex flex-col justify-center px-4 py-14 sm:px-8 sm:py-16 lg:px-16 lg:py-20"
+            className="flex flex-col justify-center px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20"
           >
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-yellow-400 mb-4">
               New Collection 2025
