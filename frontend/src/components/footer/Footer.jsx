@@ -15,15 +15,12 @@ export default function Footer() {
           <p className="font-semibold text-slate-950">Explore</p>
           <div className="mt-4 flex flex-col gap-2 text-sm">
             <NavLink to="/shop" className="hover:text-slate-950">Shop</NavLink>
-            <NavLink to="/blog" className="hover:text-slate-950">Blog</NavLink>
-            <NavLink to="/about" className="hover:text-slate-950">About</NavLink>
             <NavLink to="/contact" className="hover:text-slate-950">Contact</NavLink>
           </div>
         </div>
         <div>
           <p className="font-semibold text-slate-950">Support</p>
           <div className="mt-4 flex flex-col gap-2 text-sm">
-            <NavLink to="/faq" className="hover:text-slate-950">FAQ</NavLink>
             <NavLink to="/privacy" className="hover:text-slate-950">Privacy</NavLink>
             <NavLink to="/terms" className="hover:text-slate-950">Terms</NavLink>
           </div>
