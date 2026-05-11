@@ -54,7 +54,7 @@ function App() {
               <Route path="terms" element={<Terms />} />
               <Route path="profile" element={<Profile />} />
               <Route path="orders" element={<OrderHistory />} />
-              <Route path="order/:id" element={<OrderDetails />} />
+              <Route path="orders/:orderNumber" element={<OrderDetails />} />
               <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="/auth" element={<AuthLayout />}>

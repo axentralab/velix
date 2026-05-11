@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clearCart } from '../redux/slices/cartSlice.js';
 import { formatPrice } from '../utils/formatPrice.js';
+import { createOrder } from '../services/orders.js';
 import Input from '../components/common/Input.jsx';
 import Button from '../components/common/Button.jsx';
 
@@ -61,25 +62,51 @@ export default function Checkout() {
       }
     }
 
-    // Simulate order processing
     try {
-      // Here you would integrate with your payment processor and backend
+      // Prepare order data for API
       const orderData = {
-        ...formData,
-        items,
-        subtotal,
-        shipping,
-        total,
-        orderDate: new Date().toISOString(),
+        customer: {
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          phone: formData.phone,
+        },
+        shippingAddress: {
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          country: formData.country,
+        },
+        items: items.map(item => ({
+          productId: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          selectedSize: item.selectedSize,
+          selectedColor: item.selectedColor,
+        })),
+        payment: {
+          method: formData.paymentMethod,
+          bkashNumber: formData.bkashNumber,
+          cardLastFour: formData.cardNumber ? formData.cardNumber.slice(-4) : null,
+        },
+        pricing: {
+          subtotal,
+          shipping,
+          total,
+        },
       };
 
-      console.log('Order data:', orderData);
+      const response = await createOrder(orderData);
 
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
-
-      // Clear cart and redirect to success page
+      // Clear cart and redirect to success page with order number
       dispatch(clearCart());
-      navigate('/order-success');
+      navigate('/order-success', {
+        state: {
+          orderNumber: response.orderNumber,
+          isGuest: !localStorage.getItem('token') // Check if user was not logged in
+        }
+      });
     } catch (error) {
       console.error('Order processing failed:', error);
       alert('Order processing failed. Please try again.');

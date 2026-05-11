@@ -35,6 +35,47 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+// Order Schema
+const orderSchema = new mongoose.Schema({
+  orderNumber: { type: String, required: true, unique: true },
+  customer: {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // null for guest orders
+  },
+  shippingAddress: {
+    address: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    zipCode: { type: String, required: true },
+    country: { type: String, required: true },
+  },
+  items: [{
+    productId: { type: String, required: true },
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    quantity: { type: Number, required: true },
+    selectedSize: { type: String },
+    selectedColor: { type: String },
+  }],
+  payment: {
+    method: { type: String, required: true, enum: ['cod', 'bkash', 'card'] },
+    status: { type: String, default: 'pending', enum: ['pending', 'paid', 'failed'] },
+    bkashNumber: { type: String },
+    cardLastFour: { type: String },
+  },
+  pricing: {
+    subtotal: { type: Number, required: true },
+    shipping: { type: Number, required: true },
+    total: { type: Number, required: true },
+  },
+  status: { type: String, default: 'processing', enum: ['processing', 'shipped', 'delivered', 'cancelled'] },
+  trackingNumber: { type: String },
+}, { timestamps: true });
+
+const Order = mongoose.model('Order', orderSchema);
+
 function createToken(user) {
   return jwt.sign({ id: user._id, email: user.email }, jwtSecret, { expiresIn: tokenExpiry });
 }
@@ -151,6 +192,109 @@ app.post('/api/auth/reset-password', async (req, res) => {
     res.json({ message: 'Password has been reset successfully.' });
   } catch (err) {
     return res.status(400).json({ message: 'Invalid or expired token.' });
+  }
+});
+
+// ── Order Management ─────────────────────────────────────────────────────────
+
+// Create Order (supports both guest and authenticated users)
+app.post('/api/orders', async (req, res) => {
+  try {
+    const { customer, shippingAddress, items, payment, pricing } = req.body;
+
+    // Generate unique order number
+    const orderNumber = `VELOURA-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
+
+    // Get user ID if authenticated
+    let userId = null;
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      try {
+        const token = authHeader.substring(7);
+        const payload = jwt.verify(token, jwtSecret);
+        userId = payload.id;
+      } catch (err) {
+        // Invalid token, treat as guest
+      }
+    }
+
+    const order = new Order({
+      orderNumber,
+      customer: {
+        ...customer,
+        userId,
+      },
+      shippingAddress,
+      items,
+      payment,
+      pricing,
+    });
+
+    await order.save();
+
+    res.status(201).json({
+      orderNumber,
+      message: 'Order created successfully',
+      order: {
+        id: order._id,
+        orderNumber,
+        status: order.status,
+        total: order.pricing.total,
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error during order creation', error: error.message });
+  }
+});
+
+// Get User Orders (requires authentication)
+app.get('/api/orders', async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Authentication required' });
+    }
+
+    const token = authHeader.substring(7);
+    const payload = jwt.verify(token, jwtSecret);
+    const userId = payload.id;
+
+    const orders = await Order.find({ 'customer.userId': userId })
+      .sort({ createdAt: -1 })
+      .select('orderNumber status pricing.total createdAt trackingNumber');
+
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error fetching orders', error: error.message });
+  }
+});
+
+// Get Single Order (requires authentication)
+app.get('/api/orders/:orderNumber', async (req, res) => {
+  try {
+    const { orderNumber } = req.params;
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Authentication required' });
+    }
+
+    const token = authHeader.substring(7);
+    const payload = jwt.verify(token, jwtSecret);
+    const userId = payload.id;
+
+    const order = await Order.findOne({
+      orderNumber,
+      'customer.userId': userId
+    });
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error fetching order', error: error.message });
   }
 });
 

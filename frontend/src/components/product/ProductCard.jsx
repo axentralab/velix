@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlice.js';
+import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
 
 export default function ProductCard({ product }) {
+  const dispatch = useDispatch();
+  const wishlistItems = useSelector((state) => state.wishlist.items);
+  const isInWishlist = wishlistItems.some((item) => item.id === product.id);
+
   const imageSrc = product.image
     ? product.image
     : `https://placehold.co/500x640/f5f5f5/aaaaaa?text=${encodeURIComponent(product.name || 'Product')}`;
@@ -10,6 +18,16 @@ export default function ProductCard({ product }) {
   const discount = product.originalPrice && product.originalPrice > product.price
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : null;
+
+  const handleWishlistToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isInWishlist) {
+      dispatch(removeFromWishlist(product.id));
+    } else {
+      dispatch(addToWishlist(product));
+    }
+  };
 
   return (
     <article className="group relative cursor-pointer min-w-0">
@@ -43,6 +61,19 @@ export default function ProductCard({ product }) {
               </span>
             )}
           </div>
+
+          {/* Wishlist button — top right */}
+          <button
+            onClick={handleWishlistToggle}
+            className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors"
+            aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            {isInWishlist ? (
+              <HeartSolid className="h-4 w-4 text-red-500" />
+            ) : (
+              <HeartOutline className="h-4 w-4 text-gray-600" />
+            )}
+          </button>
 
           {/* Floating price tag — Fabrilife signature */}
           <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-white px-3 py-1.5 shadow-md text-center min-w-[110px]">
