@@ -10,21 +10,33 @@ import mongoose from 'mongoose';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ path: path.join(__dirname, '.env') });
+// Load env from backend folder (local dev) or from Vercel env vars
+dotenv.config({ path: path.join(__dirname, '../backend/.env') });
 
 const app = express();
-const port = process.env.PORT || 5000;
 const jwtSecret = process.env.JWT_SECRET || 'change_this_secret';
 const tokenExpiry = process.env.TOKEN_EXPIRY || '1d';
 const mongoUri = process.env.MONGO_URI;
 
-app.use(cors());
+// CORS — allow all origins in production (Vercel handles this)
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 
-// MongoDB Connection
-mongoose.connect(mongoUri)
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+// MongoDB Connection (cached for serverless)
+let isConnected = false;
+async function connectDB() {
+  if (isConnected) return;
+  if (!mongoUri) {
+    throw new Error('MONGO_URI environment variable is not set');
+  }
+  await mongoose.connect(mongoUri);
+  isConnected = true;
+  console.log('MongoDB connected');
+}
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -33,7 +45,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 function createToken(user) {
   return jwt.sign({ id: user._id, email: user.email }, jwtSecret, { expiresIn: tokenExpiry });
@@ -44,16 +56,19 @@ function userResponse(user) {
     id: user._id,
     name: user.name,
     email: user.email,
-    createdAt: user.createdAt
+    createdAt: user.createdAt,
   };
 }
 
+// Health check
 app.get('/api', (req, res) => {
-  res.json({ status: 'ok', message: 'Backend is running' });
+  res.json({ status: 'ok', message: 'Backend is running on Vercel' });
 });
 
+// Register
 app.post('/api/auth/register', async (req, res) => {
   try {
+    await connectDB();
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -66,12 +81,7 @@ app.post('/api/auth/register', async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({
-      name,
-      email,
-      password: hashedPassword,
-    });
-
+    const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
     const token = createToken(newUser);
@@ -81,8 +91,10 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
+// Login
 app.post('/api/auth/login', async (req, res) => {
   try {
+    await connectDB();
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -106,8 +118,10 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+// Forgot Password
 app.post('/api/auth/forgot-password', async (req, res) => {
   try {
+    await connectDB();
     const { email } = req.body;
 
     if (!email) {
@@ -120,7 +134,6 @@ app.post('/api/auth/forgot-password', async (req, res) => {
     }
 
     const resetToken = jwt.sign({ id: user._id, email: user.email }, jwtSecret, { expiresIn: '15m' });
-
     return res.json({
       message: 'Password reset token created. Use this token with /api/auth/reset-password.',
       token: resetToken,
@@ -130,8 +143,10 @@ app.post('/api/auth/forgot-password', async (req, res) => {
   }
 });
 
+// Reset Password
 app.post('/api/auth/reset-password', async (req, res) => {
   try {
+    await connectDB();
     const { token, password } = req.body;
 
     if (!token || !password) {
@@ -154,6 +169,4 @@ app.post('/api/auth/reset-password', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Backend server listening on http://localhost:${port}`);
-});
+export default app;

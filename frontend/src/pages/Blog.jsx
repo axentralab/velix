@@ -1,66 +1,34 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiClock, FiUser } from 'react-icons/fi';
-
-const posts = [
-  {
-    slug: 'casual-trends',
-    title: 'Casual fashion trends for 2026',
-    category: 'Trends',
-    author: 'Rahul Ahmed',
-    date: 'May 5, 2026',
-    readTime: '4 min read',
-    excerpt: 'Discover the latest in comfortable and stylish casual wear.',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80',
-    featured: true,
-  },
-  {
-    slug: 'seasonal-styling',
-    title: 'Seasonal styling for everyday essentials',
-    category: 'Styling',
-    author: 'Priya Sharma',
-    date: 'Apr 28, 2026',
-    readTime: '3 min read',
-    excerpt: 'Build a versatile wardrobe for every season.',
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    slug: 'affordable-fashion',
-    title: 'Affordable fashion tips',
-    category: 'Tips',
-    author: 'Arjun Patel',
-    date: 'Apr 15, 2026',
-    readTime: '6 min read',
-    excerpt: 'How to look great without breaking the bank.',
-    image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    slug: 'accessories-guide',
-    title: 'Guide to casual accessories',
-    category: 'Style Guide',
-    author: 'Rahul Ahmed',
-    date: 'Apr 2, 2026',
-    readTime: '5 min read',
-    excerpt: 'Complete your look with the right accessories.',
-    image: 'https://images.unsplash.com/photo-1611042553365-9b101441c135?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    slug: 'fashion-events',
-    title: 'Upcoming fashion events',
-    category: 'Events',
-    author: 'Sophia Chen',
-    date: 'Mar 22, 2026',
-    readTime: '8 min read',
-    excerpt: 'Our editors\' picks from the most iconic runway shows of the season.',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80',
-  },
-];
+import { useState, useEffect } from 'react';
+import { fetchPosts } from '../services/sanity.js';
+import Loader from '../components/common/Loader.jsx';
 
 const CATEGORIES = ['All', 'Trends', 'Styling', 'Sustainability', 'Style Guide', 'Events'];
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
 
 export default function Blog() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const data = await fetchPosts();
+        setPosts(data);
+      } catch (err) {
+        console.error("Error loading blog posts:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPosts();
+  }, []);
+
+  if (loading) return <Loader />;
+
   const featured = posts.find((p) => p.featured);
   const rest = posts.filter((p) => !p.featured);
 

@@ -1,40 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown, FiChevronUp, FiSearch } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-
-const faqData = [
-  {
-    category: 'Orders & Shipping',
-    items: [
-      { question: 'What is your return policy?', answer: 'You can return unworn items within 14 days for a full refund. Items must be in original packaging with tags attached.' },
-      { question: 'Do you offer international shipping?', answer: 'Yes, we ship worldwide with premium delivery options. International orders typically arrive in 10–14 business days.' },
-      { question: 'How do I track my order?', answer: 'Tracking information is emailed once your order ships. You can also track via your account dashboard under "Order History".' },
-      { question: 'Can I change or cancel my order?', answer: 'Orders can be changed or cancelled within 2 hours of placement. After that, we begin processing immediately.' },
-    ],
-  },
-  {
-    category: 'Products & Sizing',
-    items: [
-      { question: 'How do I find my size?', answer: 'Each product has a detailed size guide. We recommend measuring your chest, waist, and hips and comparing to our chart.' },
-      { question: 'Are your products high quality?', answer: 'Yes. We focus on comfort and durability with quality fabrics and construction.' },
-      { question: 'Do you restock sold-out items?', answer: 'Some items are limited edition and won\'t be restocked. Subscribe to our newsletter to be notified of restocks.' },
-    ],
-  },
-  {
-    category: 'Payments & Account',
-    items: [
-      { question: 'What payment methods do you accept?', answer: 'We accept all major credit/debit cards, PayPal, Apple Pay, Google Pay, and bank transfers for large orders.' },
-      { question: 'Is my payment information secure?', answer: 'Yes. We use bank-level SSL encryption. Your card details are never stored on our servers.' },
-      { question: 'How do I reset my password?', answer: 'Click "Forgot Password" on the login page. You\'ll receive a reset link within 5 minutes.' },
-    ],
-  },
-];
+import { fetchFaqs } from '../services/sanity.js';
+import Loader from '../components/common/Loader.jsx';
 
 export default function FAQ() {
   const [openItem, setOpenItem] = useState(null);
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [faqData, setFaqData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadFaqs = async () => {
+      try {
+        const data = await fetchFaqs();
+        setFaqData(data);
+      } catch (err) {
+        console.error("Error loading FAQs:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadFaqs();
+  }, []);
+
+  if (loading) return <Loader />;
 
   const categories = ['All', ...faqData.map((f) => f.category)];
 

@@ -5,20 +5,8 @@ import Loader from '../components/common/Loader.jsx';
 import { useProducts } from '../contexts/ProductContext.jsx';
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiStar, FiTruck, FiRefreshCw, FiShield, FiCreditCard } from 'react-icons/fi';
-import { useState } from 'react';
-
-const categories = [
-  { name: 'Men', slug: 'men', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80', count: 24 },
-  { name: 'Women', slug: 'women', image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=900&q=80', count: 36 },
-  { name: 'Kids', slug: 'kids', image: 'https://images.unsplash.com/photo-1503944168849-c1246463e59f?auto=format&fit=crop&w=900&q=80', count: 18 },
-  { name: 'New Arrival', slug: 'new-arrival', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80', count: 12 },
-];
-
-const testimonials = [
-  { name: 'Sophia M.', role: 'Fashion Blogger', rating: 5, text: 'Great quality at affordable prices. FashionHub has become my go-to for trendy clothes.' },
-  { name: 'James R.', role: 'Creative Director', rating: 5, text: 'Love the variety for men, women, and kids. Fast shipping and easy returns.' },
-  { name: 'Aria K.', role: 'Stylist', rating: 5, text: 'My clients love the styles. Comfortable and stylish pieces for everyday wear.' },
-];
+import { useState, useEffect } from 'react';
+import { fetchCategories, fetchTestimonials } from '../services/sanity.js';
 
 const perks = [
   { icon: <FiTruck size={22} />, title: 'Free Worldwide Shipping', desc: 'On all orders over $150' },
@@ -37,8 +25,30 @@ export default function Home() {
   const newArrivals = products.slice(2, 6);
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  
+  const [categories, setCategories] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [dataLoading, setDataLoading] = useState(true);
 
-  if (loading) return <Loader />;
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [cats, tests] = await Promise.all([
+          fetchCategories(),
+          fetchTestimonials()
+        ]);
+        setCategories(cats);
+        setTestimonials(tests);
+      } catch (err) {
+        console.error("Error loading home page data:", err);
+      } finally {
+        setDataLoading(false);
+      }
+    };
+    loadData();
+  }, []);
+
+  if (loading || dataLoading) return <Loader />;
   if (error) return <div className="mx-auto max-w-6xl px-6 py-20 text-center text-red-500">{error}</div>;
 
   return (
