@@ -24,6 +24,12 @@ export default function Checkout() {
     state: '',
     zipCode: '',
     country: 'Bangladesh',
+    paymentMethod: 'cod', // cod, bkash, card
+    bkashNumber: '',
+    cardNumber: '',
+    cardExpiry: '',
+    cardCvv: '',
+    cardHolderName: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -40,9 +46,35 @@ export default function Checkout() {
     e.preventDefault();
     setLoading(true);
 
+    // Validate payment method specific fields
+    if (formData.paymentMethod === 'bkash' && !formData.bkashNumber) {
+      alert('Please enter your bKash number');
+      setLoading(false);
+      return;
+    }
+
+    if (formData.paymentMethod === 'card') {
+      if (!formData.cardNumber || !formData.cardExpiry || !formData.cardCvv || !formData.cardHolderName) {
+        alert('Please fill in all card details');
+        setLoading(false);
+        return;
+      }
+    }
+
     // Simulate order processing
     try {
       // Here you would integrate with your payment processor and backend
+      const orderData = {
+        ...formData,
+        items,
+        subtotal,
+        shipping,
+        total,
+        orderDate: new Date().toISOString(),
+      };
+
+      console.log('Order data:', orderData);
+
       await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
 
       // Clear cart and redirect to success page
@@ -50,7 +82,7 @@ export default function Checkout() {
       navigate('/order-success');
     } catch (error) {
       console.error('Order processing failed:', error);
-      // Handle error (show toast, etc.)
+      alert('Order processing failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -163,21 +195,149 @@ export default function Checkout() {
             </div>
 
             {/* Payment Information */}
-            <div className="space-y-4 rounded-3xl bg-slate-50 p-6">
-              <h2 className="text-xl font-semibold text-slate-950">Payment Information</h2>
-              <div className="space-y-4">
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+            <div className="space-y-6 rounded-3xl bg-slate-50 p-6">
+              <h2 className="text-xl font-semibold text-slate-950">Payment Method</h2>
+
+              {/* Payment Method Selection */}
+              <div className="space-y-3">
+                <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 cursor-pointer hover:border-gold transition">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="cod"
+                    checked={formData.paymentMethod === 'cod'}
+                    onChange={handleInputChange}
+                    className="h-4 w-4 text-gold focus:ring-gold"
+                  />
                   <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded bg-slate-100"></div>
-                    <span className="text-sm text-slate-600">Cash on Delivery</span>
+                    <div className="h-8 w-8 rounded bg-green-100 flex items-center justify-center">
+                      <span className="text-green-600 text-sm font-bold">৳</span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-slate-950">Cash on Delivery (COD)</span>
+                      <p className="text-xs text-slate-600">Pay cash when your order is delivered</p>
+                    </div>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 cursor-pointer hover:border-gold transition">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="bkash"
+                    checked={formData.paymentMethod === 'bkash'}
+                    onChange={handleInputChange}
+                    className="h-4 w-4 text-gold focus:ring-gold"
+                  />
+                  <div className="flex items-center gap-3">
+                    <div className="h-8 w-8 rounded bg-pink-100 flex items-center justify-center">
+                      <span className="text-pink-600 text-xs font-bold">bKash</span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-slate-950">bKash</span>
+                      <p className="text-xs text-slate-600">Pay with bKash mobile banking</p>
+                    </div>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 cursor-pointer hover:border-gold transition">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="card"
+                    checked={formData.paymentMethod === 'card'}
+                    onChange={handleInputChange}
+                    className="h-4 w-4 text-gold focus:ring-gold"
+                  />
+                  <div className="flex items-center gap-3">
+                    <div className="h-8 w-8 rounded bg-blue-100 flex items-center justify-center">
+                      <span className="text-blue-600 text-lg">💳</span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-slate-950">Credit/Debit Card</span>
+                      <p className="text-xs text-slate-600">Visa, MasterCard, American Express</p>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              {/* Conditional Payment Fields */}
+              {formData.paymentMethod === 'bkash' && (
+                <div className="space-y-4 pt-4 border-t border-slate-200">
+                  <h3 className="text-lg font-medium text-slate-950">bKash Information</h3>
+                  <Input
+                    label="bKash Account Number"
+                    name="bkashNumber"
+                    type="tel"
+                    placeholder="01XXXXXXXXX"
+                    value={formData.bkashNumber}
+                    onChange={handleInputChange}
+                    required={formData.paymentMethod === 'bkash'}
+                  />
+                  <div className="rounded-2xl bg-blue-50 p-4 text-sm text-blue-800">
+                    <p className="font-medium mb-2">How to pay with bKash:</p>
+                    <ol className="list-decimal list-inside space-y-1 text-xs">
+                      <li>Go to your bKash app</li>
+                      <li>Select "Send Money"</li>
+                      <li>Enter our merchant number: 017XXXXXXXX</li>
+                      <li>Enter the order amount</li>
+                      <li>Complete the payment</li>
+                      <li>Send us the transaction ID</li>
+                    </ol>
                   </div>
                 </div>
-                <p className="text-sm text-slate-600">
-                  Pay with cash when your order is delivered to your door.
-                  <br />
-                  <span className="font-medium">Note:</span> Online payment integration will be available soon.
-                </p>
-              </div>
+              )}
+
+              {formData.paymentMethod === 'card' && (
+                <div className="space-y-4 pt-4 border-t border-slate-200">
+                  <h3 className="text-lg font-medium text-slate-950">Card Information</h3>
+                  <Input
+                    label="Card Number"
+                    name="cardNumber"
+                    placeholder="1234 5678 9012 3456"
+                    value={formData.cardNumber}
+                    onChange={handleInputChange}
+                    required={formData.paymentMethod === 'card'}
+                  />
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <Input
+                      label="Expiry Date"
+                      name="cardExpiry"
+                      placeholder="MM/YY"
+                      value={formData.cardExpiry}
+                      onChange={handleInputChange}
+                      required={formData.paymentMethod === 'card'}
+                    />
+                    <Input
+                      label="CVV"
+                      name="cardCvv"
+                      placeholder="123"
+                      value={formData.cardCvv}
+                      onChange={handleInputChange}
+                      required={formData.paymentMethod === 'card'}
+                    />
+                  </div>
+                  <Input
+                    label="Cardholder Name"
+                    name="cardHolderName"
+                    placeholder="John Doe"
+                    value={formData.cardHolderName}
+                    onChange={handleInputChange}
+                    required={formData.paymentMethod === 'card'}
+                  />
+                  <div className="rounded-2xl bg-yellow-50 p-4 text-sm text-yellow-800">
+                    <p className="font-medium mb-2">🔒 Secure Payment</p>
+                    <p className="text-xs">Your card information is encrypted and secure. We use SSL encryption for all transactions.</p>
+                  </div>
+                </div>
+              )}
+
+              {formData.paymentMethod === 'cod' && (
+                <div className="rounded-2xl bg-green-50 p-4 text-sm text-green-800">
+                  <p className="font-medium mb-2">✅ Cash on Delivery</p>
+                  <p className="text-xs">Pay in cash when your order is delivered to your doorstep. No advance payment required!</p>
+                </div>
+              )}
             </div>
 
             <Button
@@ -185,7 +345,10 @@ export default function Checkout() {
               className="w-full"
               disabled={loading}
             >
-              {loading ? 'Processing Order...' : 'Place Order'}
+              {loading ? 'Processing Order...' :
+               formData.paymentMethod === 'cod' ? 'Place Order (Cash on Delivery)' :
+               formData.paymentMethod === 'bkash' ? 'Pay with bKash' :
+               'Pay with Card'}
             </Button>
           </form>
         </section>
@@ -236,6 +399,13 @@ export default function Checkout() {
               <div className="flex justify-between border-t border-slate-200 pt-3 font-semibold text-slate-950">
                 <span>Total</span>
                 <span>{formatPrice(total)}</span>
+              </div>
+              <div className="flex justify-between border-t border-slate-200 pt-3 text-slate-600">
+                <span>Payment Method</span>
+                <span className="capitalize font-medium">
+                  {formData.paymentMethod === 'cod' ? 'Cash on Delivery' :
+                   formData.paymentMethod === 'bkash' ? 'bKash' : 'Card'}
+                </span>
               </div>
             </div>
           </div>
