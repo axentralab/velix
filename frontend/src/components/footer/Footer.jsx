@@ -4,7 +4,7 @@ import { FiFacebook, FiInstagram, FiTwitter, FiYoutube } from 'react-icons/fi';
 export default function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-white py-10 text-slate-700">
-      <div className="mx-auto grid max-w-6xl gap-8 px-6 md:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-8 px-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
         <div>
           <p className="text-lg font-semibold text-slate-950">FashionHub</p>
           <p className="mt-3 text-sm leading-7 text-slate-600">

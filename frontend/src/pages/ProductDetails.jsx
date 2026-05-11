@@ -147,13 +147,13 @@ export default function ProductDetails() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="h-[480px] w-full object-cover lg:h-[560px]"
+              className="w-full max-h-[560px] object-cover lg:h-[560px]"
             />
           </div>
 
           {/* Thumbnails */}
           {images.length > 1 && (
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-4 gap-3 sm:grid-cols-5">
               {images.map((src, i) => (
                 <button
                   key={i}

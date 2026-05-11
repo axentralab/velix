@@ -330,7 +330,7 @@ export default function Navbar() {
 
         {/* ── Search Overlay ─────────────── */}
         {searchOpen && (
-          <div className="absolute inset-0 z-50 flex items-center bg-white px-6 shadow-md">
+          <div className="absolute inset-x-0 top-0 z-50 flex items-center bg-white px-6 py-3 shadow-md">
             <FiSearch className="mr-3 text-gray-400" size={20} />
             <input
               ref={searchRef}
@@ -338,7 +338,7 @@ export default function Navbar() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search for products, brands, categories..."
-              className="flex-1 py-3 text-base outline-none placeholder-gray-400"
+              className="flex-1 w-full py-3 text-base outline-none placeholder-gray-400"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && searchQuery.trim()) {
                   window.location.href = `/shop?q=${encodeURIComponent(searchQuery.trim())}`;
@@ -469,7 +469,7 @@ export default function Navbar() {
               <input
                 type="text"
                 placeholder="Search products..."
-                className="flex-1 text-sm outline-none placeholder-gray-400"
+                className="flex-1 w-full text-sm outline-none placeholder-gray-400"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && e.target.value.trim()) {
                     window.location.href = `/shop?q=${encodeURIComponent(e.target.value.trim())}`;

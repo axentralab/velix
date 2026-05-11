@@ -12,10 +12,10 @@ export default function ProductCard({ product }) {
     : null;
 
   return (
-    <article className="group relative cursor-pointer">
+    <article className="group relative cursor-pointer min-w-0">
       <Link to={productLink} className="block">
         {/* Image Container — Fabrilife style: square image, no border-radius, flat */}
-        <div className="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+        <div className="relative overflow-hidden bg-gray-100 aspect-[3/4] min-w-0">
           <img
             src={imageSrc}
             alt={product.name}
