@@ -19,22 +19,7 @@
       "dest": "/api/index.js"
     },
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/product/(.*)",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/category/(.*)",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/blog/(.*)",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/(.*)",
+      "src": "/.*",
       "dest": "/index.html"
     }
   ]
