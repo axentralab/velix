@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="border-t border-slate-200 bg-white py-10 text-slate-700">
       <div className="mx-auto grid max-w-6xl gap-8 px-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
         <div>
-          <p className="text-lg font-semibold text-slate-950">FashionHub</p>
+          <p className="text-lg font-semibold text-slate-950">VELOURA</p>
           <p className="mt-3 text-sm leading-7 text-slate-600">
             Affordable and trendy fashion for men, women, and kids. Quality clothing at great prices.
           </p>
@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="mt-10 border-t border-slate-200 py-6 text-center text-sm text-slate-500">
-        © 2026 FashionHub. All rights reserved.
+        © 2026 VELOURA. All rights reserved.
       </div>
     </footer>
   );
