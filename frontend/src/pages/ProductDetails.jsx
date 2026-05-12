@@ -147,7 +147,7 @@ export default function ProductDetails() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="w-full max-h-[560px] object-cover lg:h-[560px]"
+              className="w-full object-cover h-[300px] md:h-[400px] lg:h-[560px]"
             />
           </div>
 
