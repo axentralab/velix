@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { removeItem, updateQuantity } from '../redux/slices/cartSlice.js';
 import { formatPrice } from '../utils/formatPrice.js';
 
@@ -65,9 +66,9 @@ export default function Cart() {
               <span>{formatPrice(subtotal)}</span>
             </div>
           </div>
-          <a href="/checkout" className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-gold px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 hover:bg-yellow-400">
+          <Link to="/checkout" className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-gold px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 hover:bg-yellow-400">
             Proceed to checkout
-          </a>
+          </Link>
         </aside>
       </div>
     </div>
