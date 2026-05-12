@@ -191,7 +191,7 @@ function MegaDropdown({ menu, onClose }) {
   if (menu.simple || menu.columns.length === 0) return null;
 
   return (
-    <div className="absolute left-0 top-full z-50 w-screen border-t border-gray-100 bg-white shadow-2xl">
+    <div className="absolute inset-x-0 top-full z-50 border-t border-gray-100 bg-white shadow-2xl">
       <div className="mx-auto max-w-6xl px-6 py-8">
         <div className={`grid gap-8 ${menu.columns.length === 3 ? 'grid-cols-4' : 'grid-cols-3'}`}>
           {menu.columns.map((col, ci) => (
@@ -363,36 +363,39 @@ export default function Navbar() {
           </NavLink>
 
           {/* ── Desktop Nav ─────────────── */}
-          <nav className="hidden items-center gap-1 lg:flex">
-            {NAV_MENU.map((menu) => (
-              <div
-                key={menu.label}
-                className="relative"
-                onMouseEnter={() => !menu.simple && setActiveMenu(menu.label)}
-                onMouseLeave={() => setActiveMenu(null)}
-              >
-                <Link
-                  to={menu.href}
-                  className={`flex items-center gap-1 rounded px-3 py-2 text-[13px] font-semibold tracking-wide transition
-                    ${activeMenu === menu.label ? 'text-black' : 'text-gray-700 hover:text-black'}`}
-                  onClick={closeDropdown}
+          <div className="relative hidden lg:block" onMouseLeave={() => setActiveMenu(null)}>
+            <nav className="flex items-center gap-1">
+              {NAV_MENU.map((menu) => (
+                <div
+                  key={menu.label}
+                  onMouseEnter={() => !menu.simple && setActiveMenu(menu.label)}
                 >
-                  {menu.label}
-                  {!menu.simple && (
-                    <FiChevronDown
-                      size={13}
-                      className={`transition-transform duration-200 ${activeMenu === menu.label ? 'rotate-180' : ''}`}
-                    />
-                  )}
-                </Link>
+                  <Link
+                    to={menu.href}
+                    className={`flex items-center gap-1 rounded px-3 py-2 text-[13px] font-semibold tracking-wide transition ${
+                      activeMenu === menu.label ? 'text-black' : 'text-gray-700 hover:text-black'
+                    }`}
+                    onClick={closeDropdown}
+                  >
+                    {menu.label}
+                    {!menu.simple && (
+                      <FiChevronDown
+                        size={13}
+                        className={`transition-transform duration-200 ${activeMenu === menu.label ? 'rotate-180' : ''}`}
+                      />
+                    )}
+                  </Link>
+                </div>
+              ))}
+            </nav>
 
-                {/* Mega Dropdown */}
-                {activeMenu === menu.label && (
-                  <MegaDropdown menu={menu} onClose={closeDropdown} />
-                )}
-              </div>
-            ))}
-          </nav>
+            {activeMenu && (
+              <MegaDropdown
+                menu={NAV_MENU.find((menu) => menu.label === activeMenu)}
+                onClose={closeDropdown}
+              />
+            )}
+          </div>
 
           {/* ── Right Icons ─────────────── */}
           <div className="flex items-center gap-1 text-gray-700">
