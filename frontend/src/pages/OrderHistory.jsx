@@ -106,17 +106,20 @@ export default function OrderHistory() {
         </div>
       ) : (
         <div className="space-y-6">
-          {orders.map((order) => (
-            <div key={order._id} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-semibold text-slate-950">
-                      Order #{order.orderNumber}
-                    </h3>
-                    <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${getStatusColor(order.status)}`}>
-                      {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                    </span>
+          {orders.map((order) => {
+            const displayStatus = order.orderStatus || order.status;
+            return (
+              <div key={order._id} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-lg font-semibold text-slate-950">
+                        Order #{order.orderNumber}
+                      </h3>
+                      <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${getStatusColor(displayStatus)}`}>
+                        {displayStatus.charAt(0).toUpperCase() + displayStatus.slice(1)}
+                      </span>
+                    </div>
                   </div>
                   <p className="text-sm text-slate-600">
                     Placed on {new Date(order.createdAt).toLocaleDateString('en-US', {
@@ -143,8 +146,8 @@ export default function OrderHistory() {
                   </Link>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

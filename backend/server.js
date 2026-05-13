@@ -267,6 +267,33 @@ app.post('/api/auth/reset-password', async (req, res) => {
   }
 });
 
+// Update user profile
+app.patch('/api/auth/profile', async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Authentication required' });
+    }
+
+    const token = authHeader.substring(7);
+    const payload = jwt.verify(token, jwtSecret);
+    const user = await User.findById(payload.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const { name, phone } = req.body;
+    if (name) user.name = name;
+    if (phone) user.phone = phone;
+
+    await user.save();
+    res.json({ user: userResponse(user) });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error updating profile', error: error.message });
+  }
+});
+
 // ── Order Management ─────────────────────────────────────────────────────────
 
 // Create Order (supports both guest and authenticated users)
@@ -300,6 +327,8 @@ app.post('/api/orders', async (req, res) => {
       items,
       payment,
       pricing,
+      status: 'pending_payment',
+      orderStatus: 'pending_payment',
     });
 
     await order.save();
@@ -333,9 +362,12 @@ app.get('/api/orders', async (req, res) => {
 
     const orders = await Order.find({ 'customer.userId': userId })
       .sort({ createdAt: -1 })
-      .select('orderNumber status pricing.total createdAt trackingNumber');
+      .select('orderNumber orderStatus pricing.total createdAt trackingNumber payment.method');
 
-    res.json(orders);
+    res.json(orders.map((order) => ({
+      ...order.toObject(),
+      status: order.orderStatus,
+    })));
   } catch (error) {
     res.status(500).json({ message: 'Server error fetching orders', error: error.message });
   }
@@ -364,7 +396,9 @@ app.get('/api/orders/:orderNumber', async (req, res) => {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    res.json(order);
+    const result = order.toObject();
+    result.status = order.orderStatus;
+    res.json(result);
   } catch (error) {
     res.status(500).json({ message: 'Server error fetching order', error: error.message });
   }
@@ -375,10 +409,26 @@ app.get('/api/admin/orders', requireAdmin, async (req, res) => {
   try {
     const orders = await Order.find()
       .sort({ createdAt: -1 })
-      .select('orderNumber customer status pricing.createdAt pricing.total trackingNumber payment.method');
+      .select('orderNumber customer orderStatus pricing.createdAt pricing.total trackingNumber payment.method');
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: 'Server error fetching admin orders', error: error.message });
+  }
+});
+
+// Admin: Get single order details
+app.get('/api/admin/orders/:orderNumber', requireAdmin, async (req, res) => {
+  try {
+    const { orderNumber } = req.params;
+    const order = await Order.findOne({ orderNumber });
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error fetching admin order', error: error.message });
   }
 });
 
@@ -394,7 +444,7 @@ app.patch('/api/admin/orders/:orderNumber/status', requireAdmin, async (req, res
 
     const order = await Order.findOneAndUpdate(
       { orderNumber },
-      { status },
+      { status, orderStatus: status },
       { new: true }
     );
 
@@ -449,12 +499,55 @@ app.post('/api/admin/shipments', requireAdmin, async (req, res) => {
 
     await Order.findOneAndUpdate(
       { orderNumber },
-      { orderStatus: 'shipped', courier, trackingNumber, estimatedDelivery: shipment.estimatedDelivery }
+      { status: 'shipped', orderStatus: 'shipped', courier, trackingNumber, estimatedDelivery: shipment.estimatedDelivery }
     );
 
     res.status(201).json(shipment);
   } catch (error) {
     res.status(500).json({ message: 'Server error creating shipment', error: error.message });
+  }
+});
+
+// Admin: Get all shipments
+app.get('/api/admin/shipments', requireAdmin, async (req, res) => {
+  try {
+    const shipments = await Shipment.find().sort({ createdAt: -1 });
+    res.json(shipments);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error fetching shipments', error: error.message });
+  }
+});
+
+// Admin: Update shipment status
+app.patch('/api/admin/shipments/:shipmentId', requireAdmin, async (req, res) => {
+  try {
+    const { shipmentId } = req.params;
+    const { status, courier, trackingNumber, estimatedDelivery } = req.body;
+
+    const shipment = await Shipment.findById(shipmentId);
+    if (!shipment) {
+      return res.status(404).json({ message: 'Shipment not found' });
+    }
+
+    if (status && ['pending', 'picked', 'in_transit', 'out_for_delivery', 'delivered', 'failed'].includes(status)) {
+      shipment.status = status;
+    }
+    if (courier) shipment.courier = courier;
+    if (trackingNumber) shipment.trackingNumber = trackingNumber;
+    if (estimatedDelivery) shipment.estimatedDelivery = new Date(estimatedDelivery);
+
+    await shipment.save();
+
+    if (shipment.orderNumber && status === 'delivered') {
+      await Order.findOneAndUpdate(
+        { orderNumber: shipment.orderNumber },
+        { status: 'delivered', orderStatus: 'delivered' }
+      );
+    }
+
+    res.json(shipment);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error updating shipment', error: error.message });
   }
 });
 
@@ -499,12 +592,45 @@ app.post('/api/admin/payments/:orderNumber/verify', requireAdmin, async (req, re
 
     await Order.findOneAndUpdate(
       { orderNumber },
-      { 'payment.status': 'paid', orderStatus: 'processing' }
+      { 'payment.status': 'paid', status: 'processing', orderStatus: 'processing' }
     );
 
     res.status(201).json(transaction);
   } catch (error) {
     res.status(500).json({ message: 'Server error verifying payment', error: error.message });
+  }
+});
+
+// Admin: Reject payment
+app.post('/api/admin/payments/:orderNumber/reject', requireAdmin, async (req, res) => {
+  try {
+    const { orderNumber } = req.params;
+    const { reason } = req.body;
+
+    const order = await Order.findOne({ orderNumber });
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    const transaction = new PaymentTransaction({
+      orderNumber,
+      method: order.payment.method,
+      amount: order.pricing.total,
+      status: 'failed',
+      verifiedBy: req.user.email,
+      verifiedAt: new Date(),
+    });
+
+    await transaction.save();
+
+    await Order.findOneAndUpdate(
+      { orderNumber },
+      { 'payment.status': 'failed', orderStatus: 'cancelled', adminNotes: reason }
+    );
+
+    res.status(201).json(transaction);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error rejecting payment', error: error.message });
   }
 });
 

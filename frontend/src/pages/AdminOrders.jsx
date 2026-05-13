@@ -219,7 +219,7 @@ export default function AdminOrders() {
                               </button>
                             )}
                             <Link
-                              to={`/orders/${order.orderNumber}`}
+                              to={`/admin/orders/${order.orderNumber}`}
                               className="inline-flex items-center gap-1 rounded px-2 py-1 text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition"
                             >
                               <FiEdit2 size={14} /> View

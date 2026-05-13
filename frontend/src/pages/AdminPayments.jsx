@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
-import { getAllOrders, verifyPayment } from '../services/orders.js';
+import { getAllOrders, verifyPayment, rejectPayment } from '../services/orders.js';
 import { formatPrice } from '../utils/formatPrice.js';
 import Loader from '../components/common/Loader.jsx';
 import { FiCheckCircle, FiXCircle } from 'react-icons/fi';
@@ -16,6 +16,8 @@ export default function AdminPayments() {
   const [error, setError] = useState(null);
   const [verifyingOrder, setVerifyingOrder] = useState(null);
   const [verificationForm, setVerificationForm] = useState({});
+  const [rejectingOrder, setRejectingOrder] = useState(null);
+  const [rejectionForm, setRejectionForm] = useState({});
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -54,6 +56,25 @@ export default function AdminPayments() {
     } catch (err) {
       console.error('Payment verification failed:', err);
       alert('Failed to verify payment.');
+    }
+  };
+
+  const handleRejectPayment = async (orderNumber) => {
+    const form = rejectionForm[orderNumber];
+    if (!form?.reason) {
+      alert('Please enter rejection reason');
+      return;
+    }
+
+    try {
+      await rejectPayment(orderNumber, form.reason);
+      setOrders((prev) => prev.filter((o) => o.orderNumber !== orderNumber));
+      alert('Payment rejected successfully!');
+      setRejectingOrder(null);
+      setRejectionForm({});
+    } catch (err) {
+      console.error('Payment rejection failed:', err);
+      alert('Failed to reject payment.');
     }
   };
 
@@ -153,13 +174,54 @@ export default function AdminPayments() {
                         </button>
                       </div>
                     </div>
+                  ) : rejectingOrder === order.orderNumber ? (
+                    <div className="mt-6 space-y-4 rounded-2xl bg-red-50 p-4">
+                      <div>
+                        <label className="block text-sm font-semibold text-slate-950 mb-2">Rejection Reason</label>
+                        <textarea
+                          placeholder="Enter reason for rejection"
+                          value={rejectionForm[order.orderNumber]?.reason || ''}
+                          onChange={(e) => setRejectionForm({
+                            ...rejectionForm,
+                            [order.orderNumber]: {
+                              ...rejectionForm[order.orderNumber],
+                              reason: e.target.value
+                            }
+                          })}
+                          className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm"
+                          rows={3}
+                        />
+                      </div>
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => handleRejectPayment(order.orderNumber)}
+                          className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-red-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
+                        >
+                          <FiXCircle size={16} /> Reject Payment
+                        </button>
+                        <button
+                          onClick={() => setRejectingOrder(null)}
+                          className="flex-1 rounded-full border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
                   ) : (
-                    <button
-                      onClick={() => setVerifyingOrder(order.orderNumber)}
-                      className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
-                    >
-                      <FiCheckCircle size={16} /> Verify Payment
-                    </button>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => setVerifyingOrder(order.orderNumber)}
+                        className="flex-1 inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+                      >
+                        <FiCheckCircle size={16} /> Verify Payment
+                      </button>
+                      <button
+                        onClick={() => setRejectingOrder(order.orderNumber)}
+                        className="flex-1 inline-flex items-center gap-2 rounded-full bg-red-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
+                      >
+                        <FiXCircle size={16} /> Reject Payment
+                      </button>
+                    </div>
                   )}
                 </div>
               ))}

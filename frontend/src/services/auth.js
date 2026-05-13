@@ -19,3 +19,8 @@ export async function resetPassword(payload) {
   const { data } = await apiClient.post('/auth/reset-password', payload);
   return data;
 }
+
+export async function updateProfile(profileData) {
+  const { data } = await apiClient.patch('/auth/profile', profileData);
+  return data;
+}

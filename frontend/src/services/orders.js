@@ -56,6 +56,11 @@ export async function verifyPayment(orderNumber, paymentData) {
   return data;
 }
 
+export async function rejectPayment(orderNumber, reason) {
+  const { data } = await apiClient.post(`/admin/payments/${orderNumber}/reject`, { reason });
+  return data;
+}
+
 // ── Refund Services ──
 
 export async function getAllRefunds() {
@@ -82,5 +87,20 @@ export async function getAnalyticsSales() {
 
 export async function getAnalyticsSummary() {
   const { data } = await apiClient.get('/admin/analytics/summary');
+  return data;
+}
+
+export async function getAdminOrder(orderNumber) {
+  const { data } = await apiClient.get(`/admin/orders/${orderNumber}`);
+  return data;
+}
+
+export async function getAllShipments() {
+  const { data } = await apiClient.get('/admin/shipments');
+  return data;
+}
+
+export async function updateShipment(shipmentId, shipmentData) {
+  const { data } = await apiClient.patch(`/admin/shipments/${shipmentId}`, shipmentData);
   return data;
 }

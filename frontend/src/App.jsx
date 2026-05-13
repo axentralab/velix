@@ -17,7 +17,12 @@ import Register from './pages/Register.jsx';
 import Profile from './pages/Profile.jsx';
 import OrderHistory from './pages/OrderHistory.jsx';
 import OrderDetails from './pages/OrderDetails.jsx';
+import AdminDashboard from './pages/AdminDashboard.jsx';
 import AdminOrders from './pages/AdminOrders.jsx';
+import AdminOrderDetails from './pages/AdminOrderDetails.jsx';
+import AdminPayments from './pages/AdminPayments.jsx';
+import AdminShipping from './pages/AdminShipping.jsx';
+import AdminAnalytics from './pages/AdminAnalytics.jsx';
 import Contact from './pages/Contact.jsx';
 import Privacy from './pages/Privacy.jsx';
 import Terms from './pages/Terms.jsx';
@@ -56,7 +61,12 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="orders" element={<OrderHistory />} />
               <Route path="orders/:orderNumber" element={<OrderDetails />} />
+              <Route path="admin/dashboard" element={<AdminDashboard />} />
               <Route path="admin/orders" element={<AdminOrders />} />
+              <Route path="admin/orders/:orderNumber" element={<AdminOrderDetails />} />
+              <Route path="admin/payments" element={<AdminPayments />} />
+              <Route path="admin/shipping" element={<AdminShipping />} />
+              <Route path="admin/analytics" element={<AdminAnalytics />} />
               <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="/auth" element={<AuthLayout />}>

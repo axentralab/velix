@@ -44,6 +44,8 @@ export default function OrderDetails() {
     }
   };
 
+  const displayStatus = order?.orderStatus || order?.status;
+
   if (loading) {
     return (
       <div className="mx-auto max-w-6xl px-6 py-20">
@@ -92,8 +94,8 @@ export default function OrderDetails() {
             <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Order details</p>
             <h1 className="mt-3 text-3xl font-bold text-slate-950">Order #{order.orderNumber}</h1>
             <div className="mt-2 flex items-center gap-3">
-              <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${getStatusColor(order.status)}`}>
-                {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+              <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${getStatusColor(displayStatus)}`}>
+                {displayStatus?.charAt(0).toUpperCase() + displayStatus?.slice(1)}
               </span>
               <span className="text-sm text-slate-600">
                 Placed on {new Date(order.createdAt).toLocaleDateString('en-US', {
@@ -172,7 +174,7 @@ export default function OrderDetails() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className={`h-3 w-3 rounded-full ${order.status === 'processing' ? 'bg-yellow-400' : order.status === 'shipped' ? 'bg-blue-400' : order.status === 'delivered' ? 'bg-green-400' : 'bg-gray-400'}`}></div>
-              <span className="text-sm font-medium text-slate-950 capitalize">{order.status}</span>
+              <span className="text-sm font-medium text-slate-950 capitalize">{displayStatus}</span>
             </div>
             {order.trackingNumber && (
               <div className="text-sm text-slate-600">
