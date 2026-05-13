@@ -273,7 +273,6 @@ export default function Navbar() {
   const navRef = useRef(null);
   const searchRef = useRef(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClick(e) {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -284,7 +283,6 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
-  // Focus search input when opened
   useEffect(() => {
     if (searchOpen && searchRef.current) {
       setTimeout(() => searchRef.current?.focus(), 100);
@@ -303,24 +301,24 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {/* ── Top Quick Links Bar ──────────────────────────── */}
-      <div className="hidden border-b border-gray-100 bg-gray-50 lg:block">
+      {/* ── Top Quick Links Bar — transparent ───────────── */}
+      <div className="hidden border-b border-gray-200/60 bg-transparent lg:block">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-1.5">
           <div className="flex items-center gap-6">
             {['MEN', 'WOMEN', 'KIDS', 'NEW ARRIVALS'].map((label) => (
               <Link
                 key={label}
                 to={`/shop?section=${label.toLowerCase().replace(' ', '-')}`}
-                className="text-[11px] font-semibold tracking-widest text-gray-600 hover:text-black transition"
+                className="text-[11px] font-semibold tracking-widest text-gray-500 hover:text-black transition"
               >
                 {label}
               </Link>
             ))}
           </div>
           <div className="flex items-center gap-4 text-[11px] text-gray-500">
-            <span className="font-semibold text-gray-700">GET 5% OFF ON APP</span>
-            <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium">App Store</a>
-            <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium">Google Play</a>
+            <span className="font-semibold text-gray-600">GET 5% OFF ON APP</span>
+            <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">App Store</a>
+            <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">Google Play</a>
           </div>
         </div>
       </div>
@@ -399,7 +397,6 @@ export default function Navbar() {
 
           {/* ── Right Icons ─────────────── */}
           <div className="flex items-center gap-1 text-gray-700">
-            {/* Search */}
             <button
               onClick={() => setSearchOpen(true)}
               className="hidden rounded-full p-2.5 hover:bg-gray-100 transition md:flex"
@@ -408,7 +405,6 @@ export default function Navbar() {
               <FiSearch size={19} />
             </button>
 
-            {/* Wishlist */}
             <NavLink
               to="/wishlist"
               className="rounded-full p-2.5 hover:bg-gray-100 transition"
@@ -417,7 +413,6 @@ export default function Navbar() {
               <FiHeart size={19} />
             </NavLink>
 
-            {/* Cart */}
             <NavLink
               to="/cart"
               className="relative rounded-full p-2.5 hover:bg-gray-100 transition"
@@ -426,14 +421,12 @@ export default function Navbar() {
               <FiShoppingBag size={19} />
             </NavLink>
 
-            {/* User */}
             {user ? (
               <div className="relative group">
                 <button className="flex items-center gap-1.5 rounded-full border border-gray-300 px-3 py-1.5 text-xs font-medium hover:border-black transition">
                   <FiUser size={14} />
                   {user.name?.split(' ')[0]}
                 </button>
-                {/* User dropdown */}
                 <div className="absolute right-0 top-full hidden w-44 rounded-xl border border-gray-100 bg-white py-2 shadow-xl group-hover:block">
                   <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Profile</Link>
                   <Link to="/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Orders</Link>
@@ -453,7 +446,6 @@ export default function Navbar() {
               </NavLink>
             )}
 
-            {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="ml-1 rounded-full p-2.5 hover:bg-gray-100 transition lg:hidden"
@@ -466,7 +458,6 @@ export default function Navbar() {
         {/* ── Mobile Menu ─────────────────────────────────── */}
         {mobileOpen && (
           <div className="border-t border-gray-100 bg-white lg:hidden max-h-[80vh] overflow-y-auto">
-            {/* Search */}
             <div className="flex items-center border-b border-gray-100 px-4 py-3">
               <FiSearch className="mr-3 text-gray-400" size={16} />
               <input
@@ -482,7 +473,6 @@ export default function Navbar() {
               />
             </div>
 
-            {/* Nav Items */}
             {NAV_MENU.map((menu) => (
               <div key={menu.label} className="border-b border-gray-50">
                 {menu.simple || menu.columns.length === 0 ? (
@@ -542,7 +532,6 @@ export default function Navbar() {
               </div>
             ))}
 
-            {/* Auth Links */}
             <div className="border-t border-gray-100 px-5 py-4">
               {user ? (
                 <div className="space-y-2">
