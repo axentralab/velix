@@ -314,7 +314,7 @@ export default function Home() {
       {/* ── HERO BANNER ── */}
       <section
         className="relative overflow-hidden bg-cover bg-center bg-no-repeat flex items-center"
-        style={{ backgroundImage: `url(${bgBanner})`, height: '620px' }}
+        style={{ backgroundImage: `url(${bgBanner})`, height: '820px' }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
 

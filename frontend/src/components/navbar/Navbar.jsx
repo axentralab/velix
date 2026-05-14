@@ -301,30 +301,32 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {/* ── Top Quick Links Bar — transparent ───────────── */}
-      <div className="hidden border-b border-gray-200/60 bg-transparent lg:block">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-1.5">
-          <div className="flex items-center gap-6">
-            {['MEN', 'WOMEN', 'KIDS', 'NEW ARRIVALS'].map((label) => (
-              <Link
-                key={label}
-                to={`/shop?section=${label.toLowerCase().replace(' ', '-')}`}
-                className="text-[11px] font-semibold tracking-widest text-gray-500 hover:text-black transition"
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-          <div className="flex items-center gap-4 text-[11px] text-gray-500">
-            <span className="font-semibold text-gray-600">GET 5% OFF ON APP</span>
-            <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">App Store</a>
-            <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">Google Play</a>
-          </div>
-        </div>
-      </div>
+
 
       {/* ── Main Header ─────────────────────────────────── */}
-      <header ref={navRef} className="sticky top-0 z-50 border-b border-gray-200 bg-white">
+      <header ref={navRef} className="sticky top-0 z-50 bg-white">
+
+        {/* ── Top Quick Links Bar ── */}
+        <div className="hidden border-b border-gray-100 lg:block">
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-1.5">
+            <div className="flex items-center gap-6">
+              {['MEN', 'WOMEN', 'KIDS', 'NEW ARRIVALS'].map((label) => (
+                <Link
+                  key={label}
+                  to={`/shop?section=${label.toLowerCase().replace(' ', '-')}`}
+                  className="text-[11px] font-semibold tracking-widest text-gray-500 hover:text-black transition"
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-[11px] font-semibold text-gray-600">GET 5% OFF ON APP</span>
+              <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">App Store</a>
+              <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">Google Play</a>
+            </div>
+          </div>
+        </div>
 
         {/* ── Search Overlay ─────────────── */}
         {searchOpen && (
@@ -353,7 +355,7 @@ export default function Navbar() {
           </div>
         )}
 
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+        <div className="mx-auto flex max-w-6xl items-center justify-between border-t border-gray-200 px-6 py-3">
 
           {/* Logo */}
           <NavLink to="/" className="text-xl font-black tracking-[0.1em] text-black">
