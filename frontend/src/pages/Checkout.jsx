@@ -306,7 +306,7 @@ export default function Checkout() {
                     <ol className="list-decimal list-inside space-y-1 text-xs">
                       <li>Go to your bKash app</li>
                       <li>Select "Send Money"</li>
-                      <li>Enter our merchant number: 017XXXXXXXX</li>
+                      <li>Enter our merchant number: 01906992188</li>
                       <li>Enter the order amount</li>
                       <li>Complete the payment</li>
                       <li>Send us the transaction ID</li>
