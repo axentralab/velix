@@ -11,6 +11,10 @@ services:
       - key: JWT_SECRET
         sync: false
       - key: TOKEN_EXPIRY
+        value: 1d
+      - key: MONGO_URI
         sync: false
+      - key: ADMIN_EMAIL
+        value: admin@veloura.com
       - key: PORT
         sync: false
