@@ -314,14 +314,14 @@ export default function Home() {
       {/* ── HERO BANNER ── */}
       <section
         className="relative overflow-hidden bg-cover bg-center bg-no-repeat flex items-center"
-        style={{ backgroundImage: `url(${bgBanner})`, height: '820px' }}
+        style={{ backgroundImage: `url(${bgBanner})`, height: '855px' }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
 
         <div className="relative z-10 w-full mx-auto max-w-[1400px] px-8 sm:px-12 lg:px-16">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 2, x: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="flex flex-col gap-5 max-w-xl"
           >
