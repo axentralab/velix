@@ -12,7 +12,7 @@ export default function Checkout() {
   const navigate = useNavigate();
   const items = useSelector((state) => state.cart.items);
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = subtotal > 500 ? 0 : 50; // Free shipping over $500
+  const shipping = subtotal > 500 ? 0 : 50; // Free shipping over ৳500
   const total = subtotal + shipping;
 
   const [formData, setFormData] = useState({

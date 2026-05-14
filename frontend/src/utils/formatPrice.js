@@ -1,6 +1,6 @@
 export function formatPrice(value) {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-BD', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'BDT',
   }).format(value);
 }
