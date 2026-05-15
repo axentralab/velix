@@ -4,6 +4,8 @@ import Input from '../components/common/Input.jsx';
 import Button from '../components/common/Button.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'admin@veloura.com';
+
 export default function Login() {
   const navigate = useNavigate();
   const { login, loading } = useAuth();
@@ -21,6 +23,11 @@ export default function Login() {
 
     if (!form.email || !form.password) {
       setMessage({ type: 'error', text: 'Please enter both email and password.' });
+      return;
+    }
+
+    if (form.email === ADMIN_EMAIL) {
+      setMessage({ type: 'error', text: 'Admin users must use the admin login page at /admin/login.' });
       return;
     }
 

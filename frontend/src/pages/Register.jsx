@@ -4,6 +4,8 @@ import Input from '../components/common/Input.jsx';
 import Button from '../components/common/Button.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'admin@veloura.com';
+
 export default function Register() {
   const navigate = useNavigate();
   const { register, loading } = useAuth();
@@ -21,6 +23,11 @@ export default function Register() {
 
     if (!form.name || !form.email || !form.password) {
       setMessage({ type: 'error', text: 'Please complete all fields to create your account.' });
+      return;
+    }
+
+    if (form.email === ADMIN_EMAIL) {
+      setMessage({ type: 'error', text: 'Admin account already exists. Use the admin login page.' });
       return;
     }
 

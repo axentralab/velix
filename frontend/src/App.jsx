@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout.jsx';
 import AuthLayout from './layouts/AuthLayout.jsx';
 import Home from './pages/Home.jsx';
@@ -71,6 +71,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Route>
             <Route path="/admin" element={<AuthLayout />}>
+              <Route index element={<Navigate to="/admin/login" replace />} />
               <Route path="login" element={<AdminLogin />} />
             </Route>
             <Route path="/auth" element={<AuthLayout />}>
