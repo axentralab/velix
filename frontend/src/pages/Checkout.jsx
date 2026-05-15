@@ -109,7 +109,8 @@ export default function Checkout() {
       });
     } catch (error) {
       console.error('Order processing failed:', error);
-      alert('Order processing failed. Please try again.');
+      const errorMessage = error.response?.data?.message || error.message || 'Order processing failed. Please try again.';
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }

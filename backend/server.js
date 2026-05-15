@@ -17,7 +17,14 @@ const port = process.env.PORT || 5000;
 const jwtSecret = process.env.JWT_SECRET || 'change_this_secret';
 const adminEmail = process.env.ADMIN_EMAIL || 'admin@veloura.com';
 const tokenExpiry = process.env.TOKEN_EXPIRY || '1d';
-const mongoUri = process.env.MONGO_URI;
+
+const mongoUri = process.env.NODE_ENV === 'production'
+  ? process.env.MONGO_URI_RENDER || process.env.MONGO_URI
+  : process.env.MONGO_URI_LOCAL || process.env.MONGO_URI || process.env.MONGO_URI_RENDER;
+
+if (!mongoUri) {
+  throw new Error('Missing MongoDB URI. Set MONGO_URI_RENDER, MONGO_URI, or MONGO_URI_LOCAL.');
+}
 
 app.use(cors());
 app.use(express.json());
