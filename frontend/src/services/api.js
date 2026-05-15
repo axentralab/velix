@@ -8,6 +8,16 @@ export const apiClient = axios.create({
   },
 });
 
+apiClient.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined' && !config.headers.Authorization) {
+    const token = localStorage.getItem('veloura_auth_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+});
+
 export function setAuthToken(token) {
   if (token) {
     apiClient.defaults.headers.common.Authorization = `Bearer ${token}`;
