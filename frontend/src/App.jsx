@@ -14,6 +14,7 @@ import Checkout from './pages/Checkout.jsx';
 import OrderSuccess from './pages/OrderSuccess.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
+import AdminLogin from './pages/AdminLogin.jsx';
 import Profile from './pages/Profile.jsx';
 import OrderHistory from './pages/OrderHistory.jsx';
 import OrderDetails from './pages/OrderDetails.jsx';
@@ -68,6 +69,9 @@ function App() {
               <Route path="admin/shipping" element={<AdminShipping />} />
               <Route path="admin/analytics" element={<AdminAnalytics />} />
               <Route path="*" element={<NotFound />} />
+            </Route>
+            <Route path="/admin" element={<AuthLayout />}>
+              <Route path="login" element={<AdminLogin />} />
             </Route>
             <Route path="/auth" element={<AuthLayout />}>
               <Route path="login" element={<Login />} />

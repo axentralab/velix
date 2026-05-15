@@ -83,7 +83,7 @@ export default function AdminPayments() {
       <div className="mx-auto max-w-4xl px-6 py-20 text-center">
         <h1 className="text-4xl font-bold text-slate-950 mb-4">Admin Access Required</h1>
         <p className="text-slate-600 mb-8">You must sign in with the admin account.</p>
-        <Link to="/auth/login" className="inline-flex items-center justify-center rounded-full bg-slate-950 px-8 py-4 text-sm font-semibold text-white transition hover:bg-slate-800">
+        <Link to="/admin/login" className="inline-flex items-center justify-center rounded-full bg-slate-950 px-8 py-4 text-sm font-semibold text-white transition hover:bg-slate-800">
           Sign in
         </Link>
       </div>

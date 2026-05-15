@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { getAdminOrder, updateOrderStatus, confirmOrder } from '../services/orders.js';
 import { formatPrice } from '../utils/formatPrice.js';
@@ -67,6 +67,12 @@ export default function AdminOrderDetails() {
       <div className="mx-auto max-w-4xl px-6 py-20 text-center">
         <h1 className="text-4xl font-bold text-slate-950 mb-4">Admin Access Required</h1>
         <p className="text-slate-600 mb-8">Sign in with the admin account to view this page.</p>
+        <Link
+          to="/admin/login"
+          className="inline-flex items-center justify-center rounded-full bg-slate-950 px-8 py-4 text-sm font-semibold text-white transition hover:bg-slate-800"
+        >
+          Sign in as admin
+        </Link>
       </div>
     );
   }
