@@ -2,6 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout.jsx';
 import AuthLayout from './layouts/AuthLayout.jsx';
+import AdminLayout from './layouts/AdminLayout.jsx';
 import Home from './pages/Home.jsx';
 import { ProductProvider } from './contexts/ProductContext.jsx';
 import { AuthProvider } from './contexts/AuthContext.jsx';
@@ -24,6 +25,11 @@ import AdminOrderDetails from './pages/AdminOrderDetails.jsx';
 import AdminPayments from './pages/AdminPayments.jsx';
 import AdminShipping from './pages/AdminShipping.jsx';
 import AdminAnalytics from './pages/AdminAnalytics.jsx';
+import AdminProducts from './pages/AdminProducts.jsx';
+import AdminInventory from './pages/AdminInventory.jsx';
+import AdminCustomers from './pages/AdminCustomers.jsx';
+import AdminFinance from './pages/AdminFinance.jsx';
+import AdminSettings from './pages/AdminSettings.jsx';
 import Contact from './pages/Contact.jsx';
 import Privacy from './pages/Privacy.jsx';
 import Terms from './pages/Terms.jsx';
@@ -62,22 +68,33 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="orders" element={<OrderHistory />} />
               <Route path="orders/:orderNumber" element={<OrderDetails />} />
-              <Route path="admin/dashboard" element={<AdminDashboard />} />
-              <Route path="admin/orders" element={<AdminOrders />} />
-              <Route path="admin/orders/:orderNumber" element={<AdminOrderDetails />} />
-              <Route path="admin/payments" element={<AdminPayments />} />
-              <Route path="admin/shipping" element={<AdminShipping />} />
-              <Route path="admin/analytics" element={<AdminAnalytics />} />
-              <Route path="*" element={<NotFound />} />
             </Route>
-            <Route path="/admin" element={<AuthLayout />}>
-              <Route index element={<Navigate to="/admin/login" replace />} />
-              <Route path="login" element={<AdminLogin />} />
+
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Navigate to="dashboard" replace />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="orders" element={<AdminOrders />} />
+              <Route path="orders/:orderNumber" element={<AdminOrderDetails />} />
+              <Route path="payments" element={<AdminPayments />} />
+              <Route path="shipping" element={<AdminShipping />} />
+              <Route path="analytics" element={<AdminAnalytics />} />
+              <Route path="products" element={<AdminProducts />} />
+              <Route path="inventory" element={<AdminInventory />} />
+              <Route path="customers" element={<AdminCustomers />} />
+              <Route path="finance" element={<AdminFinance />} />
+              <Route path="settings" element={<AdminSettings />} />
             </Route>
+
+            <Route path="/admin/login" element={<AuthLayout />}>
+              <Route index element={<AdminLogin />} />
+            </Route>
+
             <Route path="/auth" element={<AuthLayout />}>
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
             </Route>
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </ProductProvider>
       </AuthProvider>
