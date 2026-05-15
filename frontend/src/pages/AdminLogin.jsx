@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../components/common/Input.jsx';
 import Button from '../components/common/Button.jsx';
@@ -8,9 +8,15 @@ const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'admin@veloura.com';
 
 export default function AdminLogin() {
   const navigate = useNavigate();
-  const { login, logout, loading } = useAuth();
+  const { login, logout, loading, user } = useAuth();
   const [form, setForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState({ type: '', text: '' });
+
+  useEffect(() => {
+    if (user?.email === ADMIN_EMAIL) {
+      navigate('/admin/dashboard', { replace: true });
+    }
+  }, [user, navigate]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import {
   FiHeart, FiShoppingBag, FiUser, FiSearch, FiX,
-  FiMenu, FiChevronDown, FiChevronRight,
+  FiMenu, FiChevronDown, FiChevronRight, FiShield,
 } from 'react-icons/fi';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 
@@ -263,6 +263,8 @@ function MegaDropdown({ menu, onClose }) {
 }
 
 // ── Main Navbar ───────────────────────────────────────────────────────────────
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'admin@veloura.com';
+
 export default function Navbar() {
   const { user, logout } = useAuth();
   const [activeMenu, setActiveMenu] = useState(null);
@@ -424,28 +426,46 @@ export default function Navbar() {
             </NavLink>
 
             {user ? (
-              <div className="relative group">
-                <button className="flex items-center gap-1.5 rounded-full border border-gray-300 px-3 py-1.5 text-xs font-medium hover:border-black transition">
-                  <FiUser size={14} />
-                  {user.name?.split(' ')[0]}
-                </button>
-                <div className="absolute right-0 top-full hidden w-44 rounded-xl border border-gray-100 bg-white py-2 shadow-xl group-hover:block">
-                  <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Profile</Link>
-                  <Link to="/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Orders</Link>
-                  <Link to="/wishlist" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Wishlist</Link>
-                  <hr className="my-1 border-gray-100" />
-                  <button onClick={logout} className="w-full px-4 py-2 text-left text-sm text-red-500 hover:bg-gray-50">
-                    Logout
+              <>
+                <NavLink
+                  to={user.email === ADMIN_EMAIL ? '/admin/dashboard' : '/admin/login'}
+                  className="hidden sm:inline-flex items-center gap-2 rounded-full border border-gray-300 px-4 py-1.5 text-xs font-semibold tracking-wide hover:border-black hover:bg-black hover:text-white transition"
+                >
+                  <FiShield size={14} />
+                  Admin
+                </NavLink>
+                <div className="relative group">
+                  <button className="flex items-center gap-1.5 rounded-full border border-gray-300 px-3 py-1.5 text-xs font-medium hover:border-black transition">
+                    <FiUser size={14} />
+                    {user.name?.split(' ')[0]}
                   </button>
+                  <div className="absolute right-0 top-full hidden w-44 rounded-xl border border-gray-100 bg-white py-2 shadow-xl group-hover:block">
+                    <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Profile</Link>
+                    <Link to="/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Orders</Link>
+                    <Link to="/wishlist" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Wishlist</Link>
+                    <hr className="my-1 border-gray-100" />
+                    <button onClick={logout} className="w-full px-4 py-2 text-left text-sm text-red-500 hover:bg-gray-50">
+                      Logout
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </>
             ) : (
-              <NavLink
-                to="/auth/login"
-                className="ml-1 rounded-full border border-gray-300 px-4 py-1.5 text-xs font-semibold tracking-wide hover:border-black hover:bg-black hover:text-white transition"
-              >
-                Sign In
-              </NavLink>
+              <>
+                <NavLink
+                  to="/admin/login"
+                  className="hidden sm:inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-1.5 text-xs font-semibold tracking-wide text-slate-700 hover:border-black hover:bg-black hover:text-white transition"
+                >
+                  <FiShield size={14} />
+                  Admin
+                </NavLink>
+                <NavLink
+                  to="/auth/login"
+                  className="ml-1 rounded-full border border-gray-300 px-4 py-1.5 text-xs font-semibold tracking-wide hover:border-black hover:bg-black hover:text-white transition"
+                >
+                  Sign In
+                </NavLink>
+              </>
             )}
 
             <button
@@ -537,6 +557,13 @@ export default function Navbar() {
             <div className="border-t border-gray-100 px-5 py-4">
               {user ? (
                 <div className="space-y-2">
+                  <Link
+                    to={user.email === ADMIN_EMAIL ? '/admin/dashboard' : '/admin/login'}
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-full bg-slate-950 px-6 py-3 text-center text-sm font-semibold text-white"
+                  >
+                    Admin Panel
+                  </Link>
                   <Link to="/profile" onClick={() => setMobileOpen(false)} className="block py-2 text-sm text-gray-700">My Profile</Link>
                   <Link to="/orders" onClick={() => setMobileOpen(false)} className="block py-2 text-sm text-gray-700">My Orders</Link>
                   <button onClick={() => { logout(); setMobileOpen(false); }} className="block py-2 text-sm text-red-500">
@@ -544,13 +571,22 @@ export default function Navbar() {
                   </button>
                 </div>
               ) : (
-                <Link
-                  to="/auth/login"
-                  onClick={() => setMobileOpen(false)}
-                  className="block rounded-full bg-black px-6 py-3 text-center text-sm font-semibold text-white"
-                >
-                  Sign In / Register
-                </Link>
+                <div className="space-y-3">
+                  <Link
+                    to="/admin/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-full bg-slate-950 px-6 py-3 text-center text-sm font-semibold text-white"
+                  >
+                    Admin Login
+                  </Link>
+                  <Link
+                    to="/auth/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-full bg-black px-6 py-3 text-center text-sm font-semibold text-white"
+                  >
+                    Sign In / Register
+                  </Link>
+                </div>
               )}
             </div>
           </div>
