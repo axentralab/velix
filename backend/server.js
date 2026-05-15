@@ -771,6 +771,11 @@ app.post('/api/refunds', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Backend server listening on http://localhost:${port}`);
-});
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  app.listen(port, () => {
+    console.log(`Backend server listening on http://localhost:${port}`);
+  });
+}
+
+export default app;
+
