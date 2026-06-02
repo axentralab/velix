@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { FiHeart, FiShoppingBag } from 'react-icons/fi';
 import { addToWishlist, removeFromWishlist } from '../../redux/slices/wishlistSlice.js';
-import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
-import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
 
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
@@ -30,77 +29,67 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <article className="group relative cursor-pointer min-w-0">
+    <article className="group min-w-0 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm shadow-slate-200/60 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-300/40">
       <Link to={productLink} className="block">
-        {/* Image Container — Fabrilife style: square image, no border-radius, flat */}
-        <div className="relative overflow-hidden bg-gray-100 aspect-[3/4] min-w-0">
+        <div className="relative aspect-[3/4] min-w-0 overflow-hidden bg-slate-100">
           <img
             src={imageSrc}
             alt={product.name}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             onError={(e) => {
-              e.target.src = `https://placehold.co/500x640/f5f5f5/aaaaaa?text=Veloura`;
+              e.target.src = 'https://placehold.co/500x640/f5f5f5/aaaaaa?text=Veloura';
             }}
           />
 
-          {/* Badges — top left */}
-          <div className="absolute top-2 left-2 flex flex-col gap-1">
+          <div className="absolute left-3 top-3 flex flex-col gap-1.5">
             {product.newArrival && (
-              <span className="bg-black text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">
-                NEW
+              <span className="rounded-md bg-slate-950 px-2 py-1 text-[10px] font-black uppercase tracking-wider text-white">
+                New
               </span>
             )}
             {discount && (
-              <span className="bg-red-600 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">
+              <span className="rounded-md bg-red-600 px-2 py-1 text-[10px] font-black uppercase tracking-wider text-white">
                 -{discount}%
               </span>
             )}
             {product.topSelling && (
-              <span className="bg-orange-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">
-                HOT
+              <span className="rounded-md bg-lime-300 px-2 py-1 text-[10px] font-black uppercase tracking-wider text-slate-950">
+                Hot
               </span>
             )}
           </div>
 
-          {/* Wishlist button — top right */}
           <button
             onClick={handleWishlistToggle}
-            className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors"
+            className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/90 text-slate-700 shadow-sm backdrop-blur transition hover:bg-slate-950 hover:text-white"
             aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
           >
-            {isInWishlist ? (
-              <HeartSolid className="h-4 w-4 text-red-500" />
-            ) : (
-              <HeartOutline className="h-4 w-4 text-gray-600" />
-            )}
+            <FiHeart className={isInWishlist ? 'fill-red-500 text-red-500' : ''} size={17} />
           </button>
 
-          {/* Floating price tag — Fabrilife signature */}
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-white px-3 py-1.5 shadow-md text-center min-w-[110px]">
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-sm font-bold text-gray-900">৳{product.price?.toLocaleString()}</span>
-              {product.originalPrice && product.originalPrice > product.price && (
-                <span className="text-[11px] text-gray-400 line-through">৳{product.originalPrice?.toLocaleString()}</span>
-              )}
-            </div>
-          </div>
-
-          {/* VIEW MORE hover overlay — Fabrilife style */}
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span className="bg-white text-black text-xs font-bold uppercase tracking-[0.2em] px-5 py-2.5">
+          <div className="absolute inset-x-3 bottom-3 translate-y-3 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            <span className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-slate-950 px-4 py-3 text-xs font-black uppercase tracking-[0.16em] text-white">
+              <FiShoppingBag size={14} />
               View Details
             </span>
           </div>
         </div>
 
-        {/* Product name below image */}
-        <div className="mt-2.5 px-0.5">
-          <p className="text-[13px] font-semibold text-gray-900 leading-tight line-clamp-2 group-hover:text-gray-600 transition-colors">
+        <div className="p-4">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
+            {product.subcategory || product.category || 'Veloura'}
+          </p>
+          <p className="mt-2 min-h-[2.5rem] text-sm font-bold leading-5 text-slate-950 line-clamp-2">
             {product.name}
           </p>
-          {product.subcategory && (
-            <p className="mt-0.5 text-[11px] text-gray-400 uppercase tracking-wider">{product.subcategory}</p>
-          )}
+          <div className="mt-4 flex items-end justify-between gap-3">
+            <div className="flex flex-wrap items-baseline gap-2">
+              <span className="text-lg font-black text-slate-950">৳{product.price?.toLocaleString()}</span>
+              {product.originalPrice && product.originalPrice > product.price && (
+                <span className="text-xs font-semibold text-slate-400 line-through">৳{product.originalPrice?.toLocaleString()}</span>
+              )}
+            </div>
+          </div>
         </div>
       </Link>
     </article>

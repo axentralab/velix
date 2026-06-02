@@ -87,6 +87,125 @@ function BrandStrip() {
   );
 }
 
+// ── Shop by Vibe ────────────────────────────────────────────────────────────
+const SHOP_BY_VIBE = [
+  {
+    title: 'Weekend Essentials',
+    description: 'Comfort-first tees, cargos, and easy layers for every chill day.',
+    image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&q=80',
+    link: '/shop?tag=casual',
+    badge: 'Best sellers',
+  },
+  {
+    title: 'Street Style Picks',
+    description: 'Bold silhouettes, statement outerwear, and fresh sneaker looks.',
+    image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&q=80',
+    link: '/shop?tag=street',
+    badge: 'Trending now',
+  },
+  {
+    title: 'Minimal Edit',
+    description: 'Clean lines and versatile staples built for a polished daily look.',
+    image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&q=80',
+    link: '/shop?tag=minimal',
+    badge: 'New drop',
+  },
+];
+
+function ShopByVibe() {
+  return (
+    <section className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8">
+      <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-gray-500">Shop by vibe</p>
+          <h2 className="mt-2 text-2xl font-black uppercase tracking-tight text-black">Find your next favorite look</h2>
+        </div>
+        <Link to="/shop" className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-black transition-colors">
+          Explore all <FiArrowRight size={12} />
+        </Link>
+      </div>
+      <div className="grid gap-4 lg:grid-cols-3">
+        {SHOP_BY_VIBE.map((item, index) => (
+          <motion.div
+            key={item.title}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.08 }}
+            className="overflow-hidden rounded-lg bg-white shadow-sm"
+          >
+            <Link to={item.link} className="block">
+              <div className="relative h-56 overflow-hidden">
+                <img src={item.image} alt={item.title} className="h-full w-full object-cover transition duration-700 hover:scale-105" />
+                <span className="absolute left-4 top-4 rounded-full bg-lime-300 px-3 py-1 text-[10px] font-black uppercase tracking-[0.25em] text-black">
+                  {item.badge}
+                </span>
+              </div>
+              <div className="p-5">
+                <h3 className="text-lg font-black text-gray-950">{item.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-gray-600">{item.description}</p>
+                <span className="mt-4 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.15em] text-gray-500">
+                  Shop now <FiArrowRight size={11} />
+                </span>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── How it works ────────────────────────────────────────────────────────────
+function HowItWorks() {
+  const steps = [
+    {
+      icon: <FiHeart size={18} />,
+      title: 'Pick your vibe',
+      desc: 'Browse curated collections that match your everyday mood.',
+    },
+    {
+      icon: <FiCreditCard size={18} />,
+      title: 'Checkout in seconds',
+      desc: 'Secure payment and fast confirmation with zero hassle.',
+    },
+    {
+      icon: <FiTruck size={18} />,
+      title: 'Delivered to your door',
+      desc: 'Enjoy reliable delivery and easy returns on every order.',
+    },
+  ];
+
+  return (
+    <section className="mx-auto max-w-[1400px] px-4 py-2 sm:px-6 lg:px-8">
+      <div className="rounded-lg border border-gray-200 bg-white px-5 py-6 sm:px-8">
+        <div className="mb-6">
+          <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-gray-500">How it works</p>
+          <h2 className="mt-2 text-2xl font-black uppercase tracking-tight text-black">A smoother way to shop</h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {steps.map((step, index) => (
+            <motion.div
+              key={step.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.08 }}
+              className="rounded-lg bg-[#f6f5f1] p-5"
+            >
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-black text-white">
+                {step.icon}
+              </div>
+              <h3 className="mt-4 text-base font-black text-gray-950">{step.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-gray-600">{step.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── Trending Tags ────────────────────────────────────────────────────────────
 const TAGS = [
   { label: 'Oversized Tees', link: '/shop?tag=oversized' },
@@ -128,19 +247,19 @@ function StyleEditorial() {
       image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&q=80',
       tag: 'Style Guide',
       title: 'How to style oversized fits this season',
-      link: '/blog/oversized-fits',
+      link: '/shop?tag=oversized',
     },
     {
       image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80',
       tag: 'Trend Report',
       title: 'Monochrome looks for every day',
-      link: '/blog/monochrome',
+      link: '/shop?tag=monochrome',
     },
     {
       image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80',
       tag: 'Street Style',
       title: 'Dhaka streets inspire our new drop',
-      link: '/blog/dhaka-street',
+      link: '/shop?tag=street',
     },
   ];
 
@@ -156,14 +275,14 @@ function StyleEditorial() {
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
           >
-            <Link to={item.link} className="group block overflow-hidden rounded-[2rem] bg-white">
+            <Link to={item.link} className="group block overflow-hidden rounded-lg bg-white">
               <div className="relative h-64 overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.title}
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                 />
-                <span className="absolute top-4 left-4 bg-yellow-400 text-black text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full">
+                <span className="absolute top-4 left-4 bg-lime-300 text-black text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full">
                   {item.tag}
                 </span>
               </div>
@@ -314,33 +433,33 @@ export default function Home() {
       {/* ── HERO BANNER ── */}
       <section
         className="relative overflow-hidden bg-cover bg-center bg-no-repeat flex items-center"
-        style={{ backgroundImage: `url(${bgBanner})`, height: '855px' }}
+        style={{ backgroundImage: `url(${bgBanner})`, minHeight: 'calc(100vh - 112px)' }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
 
         <div className="relative z-10 w-full mx-auto max-w-[1400px] px-8 sm:px-12 lg:px-16">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 2, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="flex flex-col gap-5 max-w-xl"
           >
-            <span className="inline-flex self-start rounded-full bg-yellow-400 px-5 py-1.5 text-[11px] font-black uppercase tracking-[0.35em] text-black">
+            <span className="inline-flex self-start rounded-full bg-lime-300 px-5 py-1.5 text-[11px] font-black uppercase tracking-[0.35em] text-black">
               Trendy Collection
             </span>
 
             <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl leading-[1.08]">
-              Stylish looks<br />built for<br />everyday life.
+              Street-smart style<br />for everyday wear.
             </h1>
 
             <p className="text-sm leading-6 text-gray-200 max-w-sm">
-              Discover premium streetwear and essentials from Bangladesh's favorite fashion store. New drops, fast delivery, effortless styling.
+              Discover premium streetwear, elevated basics, and fresh drops from Bangladesh's favorite fashion store. New arrivals, fast delivery, and effortless styling in one place.
             </p>
 
             <div className="flex flex-wrap gap-3">
               <Link
                 to="/shop"
-                className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-xs font-black uppercase tracking-[0.15em] text-black transition hover:bg-yellow-400"
+                className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-xs font-black uppercase tracking-[0.15em] text-black transition hover:bg-lime-300"
               >
                 Shop All
               </Link>
@@ -352,15 +471,28 @@ export default function Home() {
               </Link>
             </div>
 
+            <div className="grid gap-3 sm:grid-cols-3 mt-2 max-w-lg">
+              {[
+                { value: '1000+', label: 'happy buyers' },
+                { value: '24h', label: 'dispatch fast' },
+                { value: '4.9/5', label: 'customer rating' },
+              ].map((stat) => (
+                <div key={stat.label} className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3 backdrop-blur-sm">
+                  <p className="text-lg font-black text-white">{stat.value}</p>
+                  <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-gray-200">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
             {/* Trust badges */}
             <div className="flex flex-wrap gap-5 mt-1">
               {[
-                { icon: <FiTruck size={13} />, text: 'Free delivery ৳2000+' },
+                { icon: <FiTruck size={13} />, text: 'Free delivery ?2000+' },
                 { icon: <FiRefreshCw size={13} />, text: '7-day easy return' },
                 { icon: <FiShield size={13} />, text: '100% authentic' },
               ].map((b, i) => (
                 <div key={i} className="flex items-center gap-1.5 text-white/85 text-xs font-semibold">
-                  <span className="text-yellow-400">{b.icon}</span>
+                  <span className="text-lime-300">{b.icon}</span>
                   {b.text}
                 </div>
               ))}
@@ -382,7 +514,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="group overflow-hidden rounded-[2rem] bg-white shadow-sm"
+              className="group overflow-hidden rounded-lg bg-white shadow-sm"
             >
               <Link to={cat.link} className="block h-full">
                 <div className="relative h-56 sm:h-64 overflow-hidden">
@@ -402,6 +534,12 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* ── NEW SHOP BY VIBE SECTION ── */}
+      <ShopByVibe />
+
+      {/* ── HOW IT WORKS ── */}
+      <HowItWorks />
 
       {/* ── TRENDING TAGS ── */}
       <TrendingTags />
@@ -428,10 +566,10 @@ export default function Home() {
 
       {/* ── FLASH SALE SECTION ── */}
       <section className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8">
-        <div className="rounded-[2rem] bg-black px-6 py-8 sm:px-10">
+        <div className="rounded-lg bg-black px-6 py-8 sm:px-10">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
             <div className="flex items-center gap-3">
-              <span className="text-yellow-400 animate-pulse">
+              <span className="text-lime-300 animate-pulse">
                 <FiZap size={22} fill="currentColor" />
               </span>
               <div>
@@ -442,7 +580,7 @@ export default function Home() {
             <FlashSaleTimer />
             <Link
               to="/shop?filter=sale"
-              className="sm:ml-auto flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.15em] text-yellow-400 hover:text-yellow-300 transition-colors"
+              className="sm:ml-auto flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.15em] text-lime-300 hover:text-yellow-300 transition-colors"
             >
               View all <FiArrowRight size={12} />
             </Link>
@@ -483,14 +621,14 @@ export default function Home() {
       {/* ── EDITORIAL BANNER PAIR ── */}
       <section className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-4 lg:grid-cols-2">
-          <Link to="/shop?gender=women" className="group relative overflow-hidden rounded-[2rem] bg-gray-950 min-h-[320px]">
+          <Link to="/shop?gender=women" className="group relative overflow-hidden rounded-lg bg-gray-950 min-h-[320px]">
             <img
               src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1200&q=80"
               alt="Women's wear"
               className="absolute inset-0 h-full w-full object-cover object-top transition duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 flex flex-col justify-end">
-              <span className="text-xs uppercase tracking-[0.35em] text-yellow-400">Women's Edit</span>
+              <span className="text-xs uppercase tracking-[0.35em] text-lime-300">Women's Edit</span>
               <h2 className="mt-3 text-3xl font-black text-white">Fresh styles for her</h2>
               <p className="mt-2 max-w-sm text-sm text-gray-300">New season pieces with elegant silhouettes and everyday comfort.</p>
               <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white group-hover:gap-3 transition-all">
@@ -498,16 +636,16 @@ export default function Home() {
               </span>
             </div>
           </Link>
-          <Link to="/shop?category=hoodie" className="group relative overflow-hidden rounded-[2rem] bg-gray-950 min-h-[320px]">
+          <Link to="/shop?category=hoodie" className="group relative overflow-hidden rounded-lg bg-gray-950 min-h-[320px]">
             <img
               src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=1200&q=80"
               alt="Hoodie collection"
               className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 flex flex-col justify-end">
-              <span className="text-xs uppercase tracking-[0.35em] text-yellow-400">Limited Drop</span>
+              <span className="text-xs uppercase tracking-[0.35em] text-lime-300">Limited Drop</span>
               <h2 className="mt-3 text-3xl font-black text-white">Cozy hoodies</h2>
-              <p className="mt-2 max-w-sm text-sm text-gray-300">Perfect layering for the season — easy to wear, easy to style.</p>
+              <p className="mt-2 max-w-sm text-sm text-gray-300">Perfect layering for the season - easy to wear, easy to style.</p>
               <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white group-hover:gap-3 transition-all">
                 Shop Hoodies <FiArrowRight size={13} />
               </span>
@@ -519,7 +657,7 @@ export default function Home() {
       {/* ── NEW ARRIVALS ── */}
       {newArrivals.length > 0 && (
         <section className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8">
-          <SectionHeader title="New Arrivals" link="/shop?filter=new" subtitle="Just dropped — get them before they sell out" />
+          <SectionHeader title="New Arrivals" link="/shop?filter=new" subtitle="Just dropped - get them before they sell out" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {newArrivals.map((product, i) => (
               <motion.div
@@ -584,12 +722,12 @@ export default function Home() {
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {[
-              { icon: <FiTruck size={20} />, title: 'Free Delivery', desc: 'On orders ৳ 2,000+' },
+              { icon: <FiTruck size={20} />, title: 'Free Delivery', desc: 'On orders ? 2,000+' },
               { icon: <FiRefreshCw size={20} />, title: 'Easy Return', desc: '7-day return policy' },
               { icon: <FiShield size={20} />, title: '100% Authentic', desc: 'Verified products only' },
               { icon: <FiCreditCard size={20} />, title: 'Secure Pay', desc: 'Safe & fast checkout' },
             ].map((perk, index) => (
-              <div key={index} className="rounded-[2rem] border border-gray-200 bg-[#f6f5f1] p-6 text-center">
+              <div key={index} className="rounded-lg border border-gray-200 bg-[#f6f5f1] p-6 text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-black text-white">
                   {perk.icon}
                 </div>
@@ -616,9 +754,9 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.45 }}
-                className="rounded-[2rem] border border-gray-200 bg-white p-7"
+                className="rounded-lg border border-gray-200 bg-white p-7"
               >
-                <div className="flex gap-1 text-yellow-400 mb-4">
+                <div className="flex gap-1 text-lime-300 mb-4">
                   {Array.from({ length: t.rating || 5 }).map((_, star) => (
                     <FiStar key={star} fill="currentColor" size={14} />
                   ))}
@@ -642,7 +780,7 @@ export default function Home() {
       {/* ── NEWSLETTER ── */}
       <section className="bg-black text-white py-16">
         <div className="mx-auto max-w-2xl px-4 text-center">
-          <p className="text-xs uppercase tracking-[0.35em] text-yellow-400">Stay in the loop</p>
+          <p className="text-xs uppercase tracking-[0.35em] text-lime-300">Stay in the loop</p>
           <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
             Subscribe for exclusive offers
           </h2>
@@ -650,8 +788,8 @@ export default function Home() {
             Be the first to know about new arrivals, flash sales, and curated drops.
           </p>
           {subscribed ? (
-            <p className="mt-8 inline-flex rounded-full bg-yellow-400 px-8 py-3 text-sm font-black uppercase tracking-[0.15em] text-black">
-              ✓ You're subscribed!
+            <p className="mt-8 inline-flex rounded-full bg-lime-300 px-8 py-3 text-sm font-black uppercase tracking-[0.15em] text-black">
+              ? You're subscribed!
             </p>
           ) : (
             <form
@@ -664,11 +802,11 @@ export default function Home() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Your email address"
-                className="w-full rounded-full border border-gray-700 bg-gray-900 px-5 py-3.5 text-sm text-white placeholder-gray-500 outline-none focus:border-yellow-400 sm:max-w-sm"
+                className="w-full rounded-full border border-gray-700 bg-gray-900 px-5 py-3.5 text-sm text-white placeholder-gray-500 outline-none focus:border-lime-300 sm:max-w-sm"
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-yellow-400 px-8 py-3.5 text-sm font-black uppercase tracking-[0.15em] text-black transition hover:bg-yellow-300"
+                className="inline-flex items-center justify-center rounded-full bg-lime-300 px-8 py-3.5 text-sm font-black uppercase tracking-[0.15em] text-black transition hover:bg-lime-200"
               >
                 Subscribe
               </button>
@@ -691,10 +829,10 @@ export default function Home() {
               className="absolute right-4 top-4 rounded-full bg-gray-100 p-2 text-gray-700 transition hover:bg-gray-200"
               aria-label="Close"
             >
-              ✕
+              �
             </button>
             <div className="flex flex-col gap-4 text-center">
-              <p className="text-sm font-black uppercase tracking-[0.35em] text-yellow-500">Special Offer</p>
+              <p className="text-sm font-black uppercase tracking-[0.35em] text-lime-600">Special Offer</p>
               <h2 className="text-3xl font-black text-gray-900 sm:text-4xl">Summer Sale: Up to 30% Off</h2>
               <p className="mx-auto max-w-xs text-sm leading-6 text-gray-600">
                 Limited-time prices on select fashion items. Tap below to shop trending styles now.

@@ -3,11 +3,18 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+  --ink: #111827;
+  --muted: #64748b;
+  --paper: #ffffff;
+  --wash: #f3f4f1;
+  --line: #dde3ea;
+  --accent: #d8ff36;
+  --accent-ink: #111827;
 }
 
 body {
-  @apply bg-white text-slate-900 antialiased;
+  @apply bg-[#f3f4f1] text-slate-900 antialiased;
   font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -20,4 +27,27 @@ input,
 textarea,
 select {
   @apply font-sans;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+@layer components {
+  .page-shell {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .surface {
+    @apply border border-slate-200 bg-white shadow-sm shadow-slate-200/50;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-slate-950 px-5 py-3 text-sm font-bold uppercase tracking-[0.16em] text-white transition hover:bg-lime-300 hover:text-slate-950;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-bold uppercase tracking-[0.16em] text-slate-950 transition hover:border-slate-950 hover:bg-slate-950 hover:text-white;
+  }
 }

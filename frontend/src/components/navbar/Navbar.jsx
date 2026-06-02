@@ -192,7 +192,7 @@ function MegaDropdown({ menu, onClose }) {
 
   return (
     <div className="absolute inset-x-0 top-full z-50 border-t border-gray-100 bg-white shadow-2xl">
-      <div className="mx-auto max-w-6xl px-6 py-8">
+      <div className="mx-auto max-w-7xl px-6 py-8">
         <div className={`grid gap-8 ${menu.columns.length === 3 ? 'grid-cols-4' : 'grid-cols-3'}`}>
           {menu.columns.map((col, ci) => (
             <div key={ci}>
@@ -296,9 +296,9 @@ export default function Navbar() {
   return (
     <>
       {/* ── Announcement Bar ─────────────────────────────── */}
-      <div className="bg-black py-2 text-center text-xs text-white">
+      <div className="bg-slate-950 py-2 text-center text-xs font-semibold text-white">
         🎉 Free delivery on orders above ৳1500! &nbsp;
-        <Link to="/shop" className="underline font-semibold hover:text-yellow-300 transition">
+        <Link to="/shop" className="underline font-semibold hover:text-lime-300 transition">
           Shop Now →
         </Link>
       </div>
@@ -306,11 +306,11 @@ export default function Navbar() {
 
 
       {/* ── Main Header ─────────────────────────────────── */}
-      <header ref={navRef} className="sticky top-0 z-50 bg-white">
+      <header ref={navRef} className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm shadow-slate-200/50 backdrop-blur-xl">
 
         {/* ── Top Quick Links Bar ── */}
         <div className="hidden border-b border-gray-100 lg:block">
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-1.5">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-1.5">
             <div className="flex items-center gap-6">
               {['MEN', 'WOMEN', 'KIDS', 'NEW ARRIVALS'].map((label) => (
                 <Link
@@ -324,8 +324,8 @@ export default function Navbar() {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-[11px] font-semibold text-gray-600">GET 5% OFF ON APP</span>
-              <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">App Store</a>
-              <a href="#" className="rounded bg-black px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">Google Play</a>
+              <a href="#" className="rounded bg-slate-950 px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">App Store</a>
+              <a href="#" className="rounded bg-slate-950 px-2 py-1 text-[10px] text-white font-medium hover:bg-gray-800 transition">Google Play</a>
             </div>
           </div>
         </div>
@@ -350,14 +350,14 @@ export default function Navbar() {
             />
             <button
               onClick={() => { setSearchOpen(false); setSearchQuery(''); }}
-              className="ml-3 rounded-full p-2 hover:bg-gray-100 transition"
+              className="ml-3 rounded-md p-2 hover:bg-gray-100 transition"
             >
               <FiX size={20} />
             </button>
           </div>
         )}
 
-        <div className="mx-auto flex max-w-6xl items-center justify-between border-t border-gray-200 px-6 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between border-t border-gray-200 px-6 py-3">
 
           {/* Logo */}
           <NavLink to="/" className="text-xl font-black tracking-[0.1em] text-black">
@@ -403,7 +403,7 @@ export default function Navbar() {
           <div className="flex items-center gap-1 text-gray-700">
             <button
               onClick={() => setSearchOpen(true)}
-              className="hidden rounded-full p-2.5 hover:bg-gray-100 transition md:flex"
+              className="hidden rounded-md p-2.5 hover:bg-gray-100 transition md:flex"
               aria-label="Search"
             >
               <FiSearch size={19} />
@@ -411,7 +411,7 @@ export default function Navbar() {
 
             <NavLink
               to="/wishlist"
-              className="rounded-full p-2.5 hover:bg-gray-100 transition"
+              className="rounded-md p-2.5 hover:bg-gray-100 transition"
               aria-label="Wishlist"
             >
               <FiHeart size={19} />
@@ -419,7 +419,7 @@ export default function Navbar() {
 
             <NavLink
               to="/cart"
-              className="relative rounded-full p-2.5 hover:bg-gray-100 transition"
+              className="relative rounded-md p-2.5 hover:bg-gray-100 transition"
               aria-label="Cart"
             >
               <FiShoppingBag size={19} />
@@ -429,17 +429,17 @@ export default function Navbar() {
               <>
                 <NavLink
                   to={user.email === ADMIN_EMAIL ? '/admin/dashboard' : '/admin/login'}
-                  className="hidden sm:inline-flex items-center gap-2 rounded-full border border-gray-300 px-4 py-1.5 text-xs font-semibold tracking-wide hover:border-black hover:bg-black hover:text-white transition"
+                  className="hidden sm:inline-flex items-center gap-2 rounded-md border border-gray-300 px-4 py-1.5 text-xs font-semibold tracking-wide hover:border-black hover:bg-slate-950 hover:text-white transition"
                 >
                   <FiShield size={14} />
                   Admin
                 </NavLink>
                 <div className="relative group">
-                  <button className="flex items-center gap-1.5 rounded-full border border-gray-300 px-3 py-1.5 text-xs font-medium hover:border-black transition">
+                  <button className="flex items-center gap-1.5 rounded-md border border-gray-300 px-3 py-1.5 text-xs font-medium hover:border-black transition">
                     <FiUser size={14} />
                     {user.name?.split(' ')[0]}
                   </button>
-                  <div className="absolute right-0 top-full hidden w-44 rounded-xl border border-gray-100 bg-white py-2 shadow-xl group-hover:block">
+                  <div className="absolute right-0 top-full hidden w-44 rounded-lg border border-gray-100 bg-white py-2 shadow-xl group-hover:block">
                     <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Profile</Link>
                     <Link to="/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Orders</Link>
                     <Link to="/wishlist" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Wishlist</Link>
@@ -454,14 +454,14 @@ export default function Navbar() {
               <>
                 <NavLink
                   to="/admin/login"
-                  className="hidden sm:inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-1.5 text-xs font-semibold tracking-wide text-slate-700 hover:border-black hover:bg-black hover:text-white transition"
+                  className="hidden sm:inline-flex items-center gap-2 rounded-md border border-slate-300 px-4 py-1.5 text-xs font-semibold tracking-wide text-slate-700 hover:border-black hover:bg-slate-950 hover:text-white transition"
                 >
                   <FiShield size={14} />
                   Admin
                 </NavLink>
                 <NavLink
                   to="/auth/login"
-                  className="ml-1 rounded-full border border-gray-300 px-4 py-1.5 text-xs font-semibold tracking-wide hover:border-black hover:bg-black hover:text-white transition"
+                  className="ml-1 rounded-md border border-gray-300 px-4 py-1.5 text-xs font-semibold tracking-wide hover:border-black hover:bg-slate-950 hover:text-white transition"
                 >
                   Sign In
                 </NavLink>
@@ -470,7 +470,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="ml-1 rounded-full p-2.5 hover:bg-gray-100 transition lg:hidden"
+              className="ml-1 rounded-md p-2.5 hover:bg-gray-100 transition lg:hidden"
             >
               {mobileOpen ? <FiX size={20} /> : <FiMenu size={20} />}
             </button>
@@ -560,7 +560,7 @@ export default function Navbar() {
                   <Link
                     to={user.email === ADMIN_EMAIL ? '/admin/dashboard' : '/admin/login'}
                     onClick={() => setMobileOpen(false)}
-                    className="block rounded-full bg-slate-950 px-6 py-3 text-center text-sm font-semibold text-white"
+                    className="block rounded-md bg-slate-950 px-6 py-3 text-center text-sm font-semibold text-white"
                   >
                     Admin Panel
                   </Link>
@@ -575,14 +575,14 @@ export default function Navbar() {
                   <Link
                     to="/admin/login"
                     onClick={() => setMobileOpen(false)}
-                    className="block rounded-full bg-slate-950 px-6 py-3 text-center text-sm font-semibold text-white"
+                    className="block rounded-md bg-slate-950 px-6 py-3 text-center text-sm font-semibold text-white"
                   >
                     Admin Login
                   </Link>
                   <Link
                     to="/auth/login"
                     onClick={() => setMobileOpen(false)}
-                    className="block rounded-full bg-black px-6 py-3 text-center text-sm font-semibold text-white"
+                    className="block rounded-md bg-slate-950 px-6 py-3 text-center text-sm font-semibold text-white"
                   >
                     Sign In / Register
                   </Link>

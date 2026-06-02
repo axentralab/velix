@@ -11,17 +11,17 @@ import Loader from '../components/common/Loader.jsx';
 
 // ── Static Special Offers (icons stay static, filter logic uses product flags) ──
 const SPECIAL_OFFERS = [
-  { icon: '⚡', label: 'Mega Deal', filter: 'onSale' },
-  { icon: '✨', label: 'New Arrival', filter: 'newArrival' },
-  { icon: '🔥', label: 'Top Selling', filter: 'topSelling' },
-  { icon: '🚚', label: 'Free Delivery', filter: 'freeDelivery' },
+  { icon: FiZap, label: 'Mega Deal', filter: 'onSale' },
+  { icon: FiStar, label: 'New Arrival', filter: 'newArrival' },
+  { icon: FiShoppingBag, label: 'Top Selling', filter: 'topSelling' },
+  { icon: FiTruck, label: 'Free Delivery', filter: 'freeDelivery' },
 ];
 
 const SORT_OPTIONS = [
   { label: 'Newest First', value: 'newest' },
   { label: 'Price: Low to High', value: 'price_asc' },
   { label: 'Price: High to Low', value: 'price_desc' },
-  { label: 'Name A–Z', value: 'name_asc' },
+  { label: 'Name A-Z', value: 'name_asc' },
 ];
 
 // Fallback category tree in case Sanity returns empty
@@ -60,7 +60,7 @@ function ShopProductCard({ product }) {
     || `https://placehold.co/400x500/f8fafc/94a3b8?text=${encodeURIComponent(product.name || 'Product')}`;
 
   return (
-    <div className="group relative bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <div className="group relative bg-white rounded-lg border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
       {/* Image */}
       <Link to={`/product/${product.slug || product.id}`} className="block relative overflow-hidden aspect-[3/4]">
         <img
@@ -84,7 +84,7 @@ function ShopProductCard({ product }) {
           )}
           {product.topSelling && (
             <span className="rounded bg-orange-500 px-1.5 py-0.5 text-[11px] font-bold text-white">
-              🔥 HOT
+              HOT
             </span>
           )}
           {product.freeDelivery && (
@@ -123,7 +123,7 @@ function ShopProductCard({ product }) {
         {/* Save badge */}
         {savings && savings > 0 && (
           <div className="mt-1.5 inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
-            💰 Save ৳{savings.toLocaleString()}
+            Save ৳{savings.toLocaleString()}
           </div>
         )}
 
@@ -264,20 +264,23 @@ export default function Shop() {
       <div>
         <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Special Offers</h3>
         <ul className="space-y-1.5">
-          {SPECIAL_OFFERS.map((offer) => (
+          {SPECIAL_OFFERS.map((offer) => {
+            const OfferIcon = offer.icon;
+            return (
             <li key={offer.filter}>
               <button
                 onClick={() => setSpecialFilter(specialFilter === offer.filter ? null : offer.filter)}
                 className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition ${specialFilter === offer.filter
                   ? 'bg-black text-white font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  : 'text-gray-700 hover:bg-[#f3f4f1]'
                   }`}
               >
-                <span>{offer.icon}</span>
+                <OfferIcon size={14} />
                 {offer.label}
               </button>
             </li>
-          ))}
+          );
+          })}
         </ul>
       </div>
 
@@ -307,7 +310,7 @@ export default function Shop() {
                     }}
                     className={`flex flex-1 items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition ${activeCategory === cat.slug
                       ? 'bg-black text-white'
-                      : 'text-gray-800 hover:bg-gray-50'
+                      : 'text-gray-800 hover:bg-[#f3f4f1]'
                       }`}
                   >
                     {cat.name}
@@ -386,7 +389,7 @@ export default function Shop() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f3f4f1]">
       {/* ── Breadcrumb ── */}
       <div className="border-b border-gray-200 bg-white px-6 py-3">
         <div className="mx-auto flex max-w-7xl items-center gap-2 text-xs text-gray-500">
@@ -494,7 +497,7 @@ export default function Shop() {
 
           {/* Product Grid */}
           {filtered.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-white py-24 text-center">
+            <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-200 bg-white py-24 text-center">
               <FiSearch size={32} className="mb-4 text-gray-300" />
               <p className="text-lg font-semibold text-gray-500">No products found</p>
               <p className="mt-1 text-sm text-gray-400">Try adjusting your filters or search term</p>

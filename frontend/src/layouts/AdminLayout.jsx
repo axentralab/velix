@@ -13,12 +13,12 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-[#eef1f4] text-slate-900">
       <div className="flex min-h-screen overflow-hidden">
         <AdminSidebar />
         <div className="flex min-h-screen flex-1 flex-col overflow-hidden">
           <AdminTopbar />
-          <main className="flex-1 overflow-y-auto bg-slate-950 px-4 py-6 sm:px-6 lg:px-8">
+          <main className="flex-1 overflow-y-auto bg-[#eef1f4] px-4 py-6 sm:px-6 lg:px-8">
             <Outlet />
           </main>
         </div>
